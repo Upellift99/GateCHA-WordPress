@@ -23,8 +23,9 @@ class GateCHA {
 	public static $wp_script_src     = '';
 
 	// Option name constants.
-	public static $option_url     = 'gatecha_url';
-	public static $option_api_key = 'gatecha_api_key';
+	public static $option_url       = 'gatecha_url';
+	public static $option_api_key   = 'gatecha_api_key';
+	public static $option_fail_mode = 'gatecha_fail_mode';
 
 	// Integration option names.
 	public static $option_wp_login          = 'gatecha_wp_login';
@@ -110,6 +111,16 @@ class GateCHA {
 	 */
 	public function is_configured() {
 		return '' !== $this->get_url() && '' !== $this->get_api_key();
+	}
+
+	/**
+	 * Get the failure mode setting ('open' or 'closed').
+	 *
+	 * @return string 'open' or 'closed'.
+	 */
+	public function get_fail_mode() {
+		$mode = get_option( self::$option_fail_mode, 'closed' );
+		return in_array( $mode, array( 'open', 'closed' ), true ) ? $mode : 'closed';
 	}
 
 	/*------------------------------------------------------------------
@@ -223,8 +234,7 @@ class GateCHA {
 		);
 
 		if ( is_wp_error( $response ) ) {
-			do_action( 'gatecha_verify_result', false );
-			return false;
+			return $this->handle_server_error( $response->get_error_message() );
 		}
 
 		$status = wp_remote_retrieve_response_code( $response );
@@ -237,8 +247,41 @@ class GateCHA {
 			return $result;
 		}
 
-		do_action( 'gatecha_verify_result', false );
-		return false;
+		return $this->handle_server_error(
+			sprintf( 'HTTP %d — %s', $status, wp_remote_retrieve_response_message( $response ) )
+		);
+	}
+
+	/**
+	 * Handle a server communication error during verification.
+	 *
+	 * Logs the error, stores it in a transient for admin notices,
+	 * and returns true or false depending on the fail mode setting.
+	 *
+	 * @param string $detail Error detail message.
+	 * @return bool True if fail-open, false if fail-closed.
+	 */
+	private function handle_server_error( $detail ) {
+		$fail_open = 'open' === $this->get_fail_mode();
+
+		$message = sprintf(
+			'[GateCHA] Server unreachable (%s). Mode: fail %s.',
+			$detail,
+			$fail_open ? 'open — submission allowed' : 'closed — submission blocked'
+		);
+
+		// Write to WordPress debug log (visible when WP_DEBUG_LOG is enabled).
+		error_log( $message ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+
+		// Store for admin notice display (1-hour TTL).
+		set_transient( 'gatecha_last_server_error', array(
+			'time'    => time(),
+			'detail'  => $detail,
+			'mode'    => $fail_open ? 'open' : 'closed',
+		), HOUR_IN_SECONDS );
+
+		do_action( 'gatecha_verify_result', $fail_open );
+		return $fail_open;
 	}
 
 	/*------------------------------------------------------------------

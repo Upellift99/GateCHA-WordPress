@@ -28,8 +28,11 @@ $gatecha_options = array(
 	'gatecha_forminator',
 	'gatecha_formidable',
 	'gatecha_html_forms',
+	'gatecha_fail_mode',
 );
 
 foreach ( $gatecha_options as $option ) {
 	delete_option( $option );
 }
+
+delete_transient( 'gatecha_last_server_error' );

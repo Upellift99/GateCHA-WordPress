@@ -79,6 +79,30 @@ add_action( 'admin_init', function () {
 		)
 	);
 
+	register_setting( 'gatecha_options', GateCHA::$option_fail_mode, array(
+		'type'              => 'string',
+		'sanitize_callback' => function ( $value ) {
+			return in_array( $value, array( 'open', 'closed' ), true ) ? $value : 'closed';
+		},
+		'default'           => 'closed',
+	) );
+
+	add_settings_field(
+		GateCHA::$option_fail_mode,
+		__( 'Failure Mode', 'gatecha-captcha' ),
+		'gatecha_settings_select_callback',
+		'gatecha_admin',
+		'gatecha_section_general',
+		array(
+			'name'    => GateCHA::$option_fail_mode,
+			'options' => array(
+				'closed' => __( 'Fail closed — block submissions when server is unreachable', 'gatecha-captcha' ),
+				'open'   => __( 'Fail open — allow submissions when server is unreachable', 'gatecha-captcha' ),
+			),
+			'hint'    => __( 'Determines how forms behave if the GateCHA server cannot be reached. "Fail closed" is safer but may block legitimate users during an outage.', 'gatecha-captcha' ),
+		)
+	);
+
 	/*--------------------------------------------------------------
 	 * WordPress section
 	 *-------------------------------------------------------------*/
@@ -252,6 +276,31 @@ function gatecha_settings_field_callback( array $args ) {
 }
 
 /**
+ * Render a select field.
+ *
+ * @param array $args Field arguments.
+ */
+function gatecha_settings_select_callback( array $args ) {
+	$name    = $args['name'];
+	$options = isset( $args['options'] ) ? $args['options'] : array();
+	$hint    = isset( $args['hint'] ) ? $args['hint'] : '';
+	$value   = (string) get_option( $name, '' );
+	?>
+	<select name="<?php echo esc_attr( $name ); ?>"
+			id="<?php echo esc_attr( $name ); ?>">
+		<?php foreach ( $options as $key => $label ) : ?>
+			<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $value, $key ); ?>>
+				<?php echo esc_html( $label ); ?>
+			</option>
+		<?php endforeach; ?>
+	</select>
+	<?php if ( $hint ) : ?>
+		<p class="description"><?php echo esc_html( $hint ); ?></p>
+	<?php endif; ?>
+	<?php
+}
+
+/**
  * Render a checkbox field.
  *
  * @param array $args Field arguments.
@@ -276,6 +325,45 @@ function gatecha_settings_checkbox_callback( array $args ) {
 	<?php endif; ?>
 	<?php
 }
+
+/*----------------------------------------------------------------------
+ * Admin notice: GateCHA server unreachable
+ *---------------------------------------------------------------------*/
+
+add_action( 'admin_notices', function () {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+
+	$error = get_transient( 'gatecha_last_server_error' );
+	if ( ! $error ) {
+		return;
+	}
+
+	$time_ago = human_time_diff( $error['time'], time() );
+	$mode     = 'open' === $error['mode']
+		? __( 'fail open (submissions allowed)', 'gatecha-captcha' )
+		: __( 'fail closed (submissions blocked)', 'gatecha-captcha' );
+	?>
+	<div class="notice notice-warning">
+		<p>
+			<strong><?php esc_html_e( 'GateCHA CAPTCHA', 'gatecha-captcha' ); ?>:</strong>
+			<?php
+			printf(
+				/* translators: 1: error detail, 2: human-readable time ago, 3: current failure mode */
+				esc_html__( 'Server unreachable (%1$s). Last error %2$s ago. Current mode: %3$s.', 'gatecha-captcha' ),
+				esc_html( $error['detail'] ),
+				esc_html( $time_ago ),
+				esc_html( $mode )
+			);
+			?>
+			<a href="<?php echo esc_url( admin_url( 'options-general.php?page=gatecha_admin' ) ); ?>">
+				<?php esc_html_e( 'Settings', 'gatecha-captcha' ); ?>
+			</a>
+		</p>
+	</div>
+	<?php
+} );
 
 /*----------------------------------------------------------------------
  * Options page HTML
