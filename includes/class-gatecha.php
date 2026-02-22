@@ -25,7 +25,9 @@ class GateCHA {
 	// Option name constants.
 	public static $option_url       = 'gatecha_url';
 	public static $option_api_key   = 'gatecha_api_key';
-	public static $option_fail_mode = 'gatecha_fail_mode';
+	public static $option_fail_mode   = 'gatecha_fail_mode';
+	public static $option_auto_verify = 'gatecha_auto_verify';
+	public static $option_hide_branding = 'gatecha_hide_branding';
 
 	// Integration option names.
 	public static $option_wp_login          = 'gatecha_wp_login';
@@ -294,9 +296,11 @@ class GateCHA {
 	 * @return array
 	 */
 	public function get_translations() {
+		$hide_branding = (bool) get_option( self::$option_hide_branding, 0 );
+
 		$translations = array(
 			'error'     => __( 'Verification failed. Try again later.', 'gatecha-captcha' ),
-			'footer'    => '',
+			'footer'    => $hide_branding ? '' : __( 'Protected by <a href="https://altcha.org" target="_blank">ALTCHA</a>', 'gatecha-captcha' ),
 			'label'     => __( "I'm not a robot", 'gatecha-captcha' ),
 			'verified'  => __( 'Verified', 'gatecha-captcha' ),
 			'verifying' => __( 'Verifying...', 'gatecha-captcha' ),
@@ -322,14 +326,23 @@ class GateCHA {
 		gatecha_enqueue_scripts();
 		gatecha_enqueue_styles();
 
+		$auto_verify    = (bool) get_option( self::$option_auto_verify, 1 );
+		$hide_branding  = (bool) get_option( self::$option_hide_branding, 0 );
+
 		$attrs = array(
 			'challengeurl'    => $this->get_challengeurl(),
 			'strings'         => wp_json_encode( $this->get_translations() ),
-			'auto'            => 'onfocus',
-			'hidelogo'        => '',
-			'hidefooter'      => '',
 			'refetchonexpire' => '',
 		);
+
+		if ( $auto_verify ) {
+			$attrs['auto'] = 'onfocus';
+		}
+
+		if ( $hide_branding ) {
+			$attrs['hidelogo']   = '';
+			$attrs['hidefooter'] = '';
+		}
 
 		if ( $name ) {
 			$attrs['name'] = $name;

@@ -103,6 +103,42 @@ add_action( 'admin_init', function () {
 		)
 	);
 
+	register_setting( 'gatecha_options', GateCHA::$option_auto_verify, array(
+		'type'              => 'integer',
+		'sanitize_callback' => 'absint',
+		'default'           => 1,
+	) );
+
+	add_settings_field(
+		GateCHA::$option_auto_verify,
+		__( 'Auto Verify', 'gatecha-captcha' ),
+		'gatecha_settings_checkbox_callback',
+		'gatecha_admin',
+		'gatecha_section_general',
+		array(
+			'name' => GateCHA::$option_auto_verify,
+			'hint' => __( 'Automatically start verification when the user focuses the form. When disabled, the user must click the checkbox manually.', 'gatecha-captcha' ),
+		)
+	);
+
+	register_setting( 'gatecha_options', GateCHA::$option_hide_branding, array(
+		'type'              => 'integer',
+		'sanitize_callback' => 'absint',
+		'default'           => 0,
+	) );
+
+	add_settings_field(
+		GateCHA::$option_hide_branding,
+		__( 'Hide Branding', 'gatecha-captcha' ),
+		'gatecha_settings_checkbox_callback',
+		'gatecha_admin',
+		'gatecha_section_general',
+		array(
+			'name' => GateCHA::$option_hide_branding,
+			'hint' => __( 'Hide the ALTCHA logo and "Protected by ALTCHA" footer. Keeping branding visible is recommended.', 'gatecha-captcha' ),
+		)
+	);
+
 	/*--------------------------------------------------------------
 	 * WordPress section
 	 *-------------------------------------------------------------*/

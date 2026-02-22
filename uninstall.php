@@ -29,6 +29,8 @@ $gatecha_options = array(
 	'gatecha_formidable',
 	'gatecha_html_forms',
 	'gatecha_fail_mode',
+	'gatecha_auto_verify',
+	'gatecha_hide_branding',
 );
 
 foreach ( $gatecha_options as $option ) {
