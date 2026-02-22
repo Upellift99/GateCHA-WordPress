@@ -19,9 +19,14 @@ via its API (`/api/v1/challenge` and `/api/v1/verify`), ensuring stats
 
 ## Plugin Structure
 
-gatecha-captcha/
-├── gatecha-captcha.php          - Main plugin file (headers, hooks, init)
-├── includes/
+GateCHA-WordPress/
+├── CLAUDE.md                    - Project guide
+├── LICENSE                      - GPL-2.0-or-later
+├── .gitignore
+├── .github/                     - GitHub Actions workflows
+└── gatecha-captcha/             - WordPress plugin directory
+    ├── gatecha-captcha.php      - Main plugin file (headers, hooks, init)
+    ├── includes/
 │   ├── class-gatecha.php        - Core class: API calls, verify logic
 │   ├── class-gatecha-admin.php  - Admin settings page (Settings → GateCHA)
 │   └── integrations/            - One file per integration
@@ -39,15 +44,14 @@ gatecha-captcha/
 │       ├── forminator.php
 │       ├── formidable.php
 │       └── html-forms.php
-├── assets/
-│   ├── js/
-│   │   └── altcha-widget.min.js - ALTCHA Web Component
-│   └── css/
-│       └── altcha-widget.min.css
-├── languages/                   - i18n (.pot, .po, .mo)
-├── readme.txt                   - WordPress.org plugin page
-├── LICENSE                      - GPL-2.0-or-later (WordPress requirement)
-└── uninstall.php                - Cleanup on plugin deletion
+    ├── assets/
+    │   ├── js/
+    │   │   └── altcha-widget.min.js - ALTCHA Web Component
+    │   └── css/
+    │       └── gatecha.css
+    ├── languages/               - i18n (.pot, .po, .mo)
+    ├── readme.txt               - WordPress.org plugin page
+    └── uninstall.php            - Cleanup on plugin deletion
 
 ## Key Architecture Decisions
 
