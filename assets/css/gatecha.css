@@ -1,0 +1,20 @@
+/**
+ * GateCHA CAPTCHA – Wrapper styles.
+ *
+ * The ALTCHA widget ships its own styles inside the Web Component shadow DOM.
+ * These are supplementary styles for the wrapper and noscript fallback.
+ *
+ * @package GateCHA_CAPTCHA
+ */
+
+.gatecha-widget-wrap {
+	margin: 10px 0;
+}
+
+.gatecha-no-javascript {
+	padding: 10px;
+	background: #fff3cd;
+	border: 1px solid #ffc107;
+	border-radius: 4px;
+	font-size: 14px;
+}
