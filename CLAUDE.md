@@ -88,6 +88,26 @@ Browser                    WordPress Backend            GateCHA Server
     │                              │                           │
     │ ◄── Accept / Reject form     │                           │
 
+## Testing Bypass
+
+For automated testing (Playwright, Cypress, etc.), define a bypass token
+in `wp-config.php` to skip server-side CAPTCHA verification:
+
+```php
+define( 'GATECHA_BYPASS_TOKEN', 'your-secret-test-token' );
+```
+
+When the `altcha` form field matches this token, `verify()` returns `true`
+immediately without calling the GateCHA server. In your test:
+
+```js
+await page.evaluate((token) => {
+  document.querySelector('input[name="altcha"]').value = token;
+}, process.env.GATECHA_BYPASS_TOKEN);
+```
+
+**Never define `GATECHA_BYPASS_TOKEN` in production.**
+
 ## Key Conventions
 
 - Plugin slug: `gatecha-captcha`

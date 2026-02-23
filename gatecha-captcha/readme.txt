@@ -76,6 +76,18 @@ Only to your own GateCHA instance. No data is sent to any third-party service. S
 
 Yes, use the `[gatecha]` shortcode to place the widget anywhere. Then verify the `altcha` POST field server-side.
 
+= How do I bypass the CAPTCHA for automated testing (e.g. Playwright)? =
+
+Define a bypass token in your `wp-config.php`:
+
+`define( 'GATECHA_BYPASS_TOKEN', 'your-secret-test-token' );`
+
+Then in your tests, set the `altcha` hidden input to this token before submitting the form:
+
+`document.querySelector('input[name="altcha"]').value = 'your-secret-test-token';`
+
+The plugin will accept the token as a valid verification without contacting the GateCHA server. **Never define this constant in production.**
+
 == External Services ==
 
 This plugin connects to your self-hosted GateCHA instance for CAPTCHA challenge generation and verification. Two API calls are made:

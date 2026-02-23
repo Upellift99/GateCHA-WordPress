@@ -218,6 +218,12 @@ class GateCHA {
 			return false;
 		}
 
+		// Bypass: if GATECHA_BYPASS_TOKEN is defined and the payload matches, skip server verification.
+		if ( defined( 'GATECHA_BYPASS_TOKEN' ) && GATECHA_BYPASS_TOKEN === $payload ) {
+			do_action( 'gatecha_verify_result', true );
+			return true;
+		}
+
 		$url     = $this->get_url();
 		$api_key = $this->get_api_key();
 
