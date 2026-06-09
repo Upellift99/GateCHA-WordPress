@@ -8,7 +8,7 @@
  * Version:     1.0.0
  * Requires at least: 6.0
  * Requires PHP: 7.4
- * Tested up to: 6.7
+ * Tested up to: 7.0
  * License:     GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: gatecha-captcha
@@ -31,10 +31,8 @@ define( 'GATECHA_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
  *---------------------------------------------------------------------*/
 require_once GATECHA_PLUGIN_DIR . 'includes/class-gatecha.php';
 
-// Set asset URLs.
-GateCHA::$widget_script_src = GATECHA_PLUGIN_URL . 'assets/js/altcha-widget.min.js';
-GateCHA::$widget_style_src  = GATECHA_PLUGIN_URL . 'assets/css/gatecha.css';
-GateCHA::$wp_script_src     = GATECHA_PLUGIN_URL . 'assets/js/gatecha.js';
+// Set asset URLs (assigned inside the class to keep them out of global scope).
+GateCHA::set_asset_urls( GATECHA_PLUGIN_URL );
 
 /*----------------------------------------------------------------------
  * Load admin settings (admin only)
@@ -63,10 +61,10 @@ $gatecha_integrations = array(
 	'html-forms',
 );
 
-foreach ( $gatecha_integrations as $integration ) {
-	$file = GATECHA_PLUGIN_DIR . 'includes/integrations/' . $integration . '.php';
-	if ( file_exists( $file ) ) {
-		require_once $file;
+foreach ( $gatecha_integrations as $gatecha_integration ) {
+	$gatecha_file = GATECHA_PLUGIN_DIR . 'includes/integrations/' . $gatecha_integration . '.php';
+	if ( file_exists( $gatecha_file ) ) {
+		require_once $gatecha_file;
 	}
 }
 
@@ -75,13 +73,6 @@ foreach ( $gatecha_integrations as $integration ) {
  *---------------------------------------------------------------------*/
 register_activation_hook( __FILE__, function () {
 	// Options are created when the user first saves settings.
-} );
-
-/*----------------------------------------------------------------------
- * Init: load text domain
- *---------------------------------------------------------------------*/
-add_action( 'init', function () {
-	load_plugin_textdomain( 'gatecha-captcha', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 } );
 
 /*----------------------------------------------------------------------

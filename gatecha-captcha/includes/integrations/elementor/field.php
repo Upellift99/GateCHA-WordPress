@@ -16,7 +16,7 @@ if ( ! class_exists( '\ElementorPro\Modules\Forms\Fields\Field_Base' ) ) {
 /**
  * Custom Elementor form field that renders the GateCHA widget.
  */
-class Elementor_Form_GateCHA_Field extends \ElementorPro\Modules\Forms\Fields\Field_Base {
+class GateCHA_Elementor_Form_Field extends \ElementorPro\Modules\Forms\Fields\Field_Base {
 
 	/**
 	 * Field type identifier.

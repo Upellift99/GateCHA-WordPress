@@ -1,0 +1,265 @@
+# Copyright (C) 2026 Upellift
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: GateCHA CAPTCHA 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/gatecha-captcha\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-06-09T12:15:13+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: gatecha-captcha\n"
+
+#. Plugin Name of the plugin
+#: gatecha-captcha.php
+#: includes/class-gatecha-admin.php:17
+#: includes/class-gatecha-admin.php:386
+msgid "GateCHA CAPTCHA"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: gatecha-captcha.php
+msgid "https://github.com/Upellift99/GateCHA"
+msgstr ""
+
+#. Description of the plugin
+#: gatecha-captcha.php
+msgid "Self-hosted ALTCHA proof-of-work CAPTCHA via GateCHA. Protects WordPress forms without cookies, fingerprinting, or third-party services."
+msgstr ""
+
+#. Author of the plugin
+#: gatecha-captcha.php
+msgid "Upellift"
+msgstr ""
+
+#. Author URI of the plugin
+#: gatecha-captcha.php
+msgid "https://github.com/Upellift99"
+msgstr ""
+
+#: gatecha-captcha.php:83
+#: includes/class-gatecha-admin.php:397
+msgid "Settings"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:18
+#: includes/integrations/elementor/field.php:36
+msgid "GateCHA"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:35
+msgid "General Settings"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:37
+msgid "Enter the URL of your GateCHA instance and the API key."
+msgstr ""
+
+#: includes/class-gatecha-admin.php:52
+msgid "GateCHA URL"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:59
+msgid "Example: https://gatecha.example.com"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:71
+msgid "API Key"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:78
+msgid "Your GateCHA API key (starts with gk_)."
+msgstr ""
+
+#: includes/class-gatecha-admin.php:92
+msgid "Failure Mode"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:99
+msgid "Fail closed — block submissions when server is unreachable"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:100
+msgid "Fail open — allow submissions when server is unreachable"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:102
+msgid "Determines how forms behave if the GateCHA server cannot be reached. \"Fail closed\" is safer but may block legitimate users during an outage."
+msgstr ""
+
+#: includes/class-gatecha-admin.php:114
+msgid "Auto Verify"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:120
+msgid "Automatically start verification when the user focuses the form. When disabled, the user must click the checkbox manually."
+msgstr ""
+
+#: includes/class-gatecha-admin.php:132
+msgid "Hide Branding"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:138
+msgid "Hide the ALTCHA logo and \"Protected by ALTCHA\" footer. Keeping branding visible is recommended."
+msgstr ""
+
+#: includes/class-gatecha-admin.php:147
+msgid "WordPress"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:149
+msgid "Enable CAPTCHA on built-in WordPress forms."
+msgstr ""
+
+#: includes/class-gatecha-admin.php:155
+#: includes/class-gatecha-admin.php:195
+msgid "Login"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:156
+#: includes/class-gatecha-admin.php:196
+msgid "Registration"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:157
+#: includes/class-gatecha-admin.php:197
+msgid "Password Reset"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:158
+msgid "Comments"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:185
+msgid "WooCommerce"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:188
+msgid "WooCommerce is not active."
+msgstr ""
+
+#: includes/class-gatecha-admin.php:225
+msgid "Integrations"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:227
+msgid "Enable CAPTCHA on third-party form plugins."
+msgstr ""
+
+#: includes/class-gatecha-admin.php:234
+msgid "Contact Form 7"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:238
+msgid "WPForms"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:242
+msgid "Gravity Forms"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:246
+msgid "Elementor Pro Forms"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:250
+msgid "Forminator"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:254
+msgid "Formidable Forms"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:258
+msgid "HTML Forms"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:281
+msgid "Plugin not active."
+msgstr ""
+
+#: includes/class-gatecha-admin.php:357
+msgid "Enable"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:381
+msgid "fail open (submissions allowed)"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:382
+msgid "fail closed (submissions blocked)"
+msgstr ""
+
+#. translators: 1: error detail, 2: human-readable time ago, 3: current failure mode
+#: includes/class-gatecha-admin.php:390
+#, php-format
+msgid "Server unreachable (%1$s). Last error %2$s ago. Current mode: %3$s."
+msgstr ""
+
+#. translators: %s: plugin version number
+#: includes/class-gatecha-admin.php:432
+#, php-format
+msgid "GateCHA CAPTCHA for WordPress — v%s"
+msgstr ""
+
+#: includes/class-gatecha.php:322
+msgid "Verification failed. Try again later."
+msgstr ""
+
+#: includes/class-gatecha.php:323
+msgid "Protected by <a href=\"https://altcha.org\" target=\"_blank\">ALTCHA</a>"
+msgstr ""
+
+#: includes/class-gatecha.php:324
+msgid "I'm not a robot"
+msgstr ""
+
+#: includes/class-gatecha.php:325
+msgid "Verified"
+msgstr ""
+
+#: includes/class-gatecha.php:326
+msgid "Verifying..."
+msgstr ""
+
+#: includes/class-gatecha.php:327
+msgid "Verifying... please wait."
+msgstr ""
+
+#: includes/class-gatecha.php:391
+msgid "This form requires JavaScript."
+msgstr ""
+
+#: includes/integrations/elementor/field.php:68
+#: includes/integrations/formidable/GateCHAFieldType.php:58
+#: includes/integrations/forminator.php:49
+#: includes/integrations/gravityforms/field.php:86
+#: includes/integrations/html-forms.php:59
+#: includes/integrations/woocommerce-login.php:46
+#: includes/integrations/woocommerce-register.php:36
+#: includes/integrations/woocommerce-reset-password.php:41
+#: includes/integrations/wordpress-comments.php:50
+#: includes/integrations/wordpress-login.php:58
+#: includes/integrations/wordpress-register.php:40
+#: includes/integrations/wordpress-reset-password.php:40
+#: includes/integrations/wpforms.php:36
+msgid "CAPTCHA verification failed."
+msgstr ""
+
+#: includes/integrations/gravityforms/field.php:64
+msgid "GateCHA CAPTCHA widget will appear here."
+msgstr ""
+
+#: includes/integrations/wordpress-comments.php:51
+msgid "Comment Submission Failure"
+msgstr ""
+
+#: includes/integrations/wordpress-login.php:57
+#: includes/integrations/wordpress-register.php:39
+#: includes/integrations/wordpress-reset-password.php:39
+msgid "Error"
+msgstr ""

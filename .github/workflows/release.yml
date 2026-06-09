@@ -16,6 +16,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+
+      - name: Generate translation template (.pot)
+        run: |
+          curl -sL https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o wp-cli.phar
+          php wp-cli.phar i18n make-pot gatecha-captcha gatecha-captcha/languages/gatecha-captcha.pot \
+            --domain=gatecha-captcha \
+            --exclude=assets,node_modules
+          rm wp-cli.phar
+
       - name: Create ZIP
         run: |
           zip -r gatecha-captcha-${GITHUB_REF_NAME}.zip gatecha-captcha

@@ -33,8 +33,8 @@ $gatecha_options = array(
 	'gatecha_hide_branding',
 );
 
-foreach ( $gatecha_options as $option ) {
-	delete_option( $option );
+foreach ( $gatecha_options as $gatecha_option ) {
+	delete_option( $gatecha_option );
 }
 
 delete_transient( 'gatecha_last_server_error' );

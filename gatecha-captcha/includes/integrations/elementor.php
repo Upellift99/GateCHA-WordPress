@@ -21,7 +21,7 @@ if ( gatecha_plugin_active( 'elementor' ) ) :
 		 */
 		add_action( 'elementor_pro/forms/fields/register', function ( $registrar ) {
 			require_once __DIR__ . '/elementor/field.php';
-			$registrar->register( new Elementor_Form_GateCHA_Field() );
+			$registrar->register( new GateCHA_Elementor_Form_Field() );
 		} );
 
 		// Enqueue widget assets globally when Elementor integration is active,

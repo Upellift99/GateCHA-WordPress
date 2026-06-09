@@ -17,10 +17,24 @@ class GateCHA {
 	/** @var GateCHA|null */
 	public static $instance;
 
-	// Asset URLs (set by main plugin file).
+	// Asset URLs (set by main plugin file via set_asset_urls()).
 	public static $widget_script_src = '';
 	public static $widget_style_src  = '';
 	public static $wp_script_src     = '';
+
+	/**
+	 * Populate the asset URLs from the plugin base URL.
+	 *
+	 * Called from the main plugin file. Kept inside the class so the
+	 * assignments stay out of the global scope.
+	 *
+	 * @param string $plugin_url Plugin base URL (with trailing slash).
+	 */
+	public static function set_asset_urls( $plugin_url ) {
+		self::$widget_script_src = $plugin_url . 'assets/js/altcha-widget.min.js';
+		self::$widget_style_src  = $plugin_url . 'assets/css/gatecha.css';
+		self::$wp_script_src     = $plugin_url . 'assets/js/gatecha.js';
+	}
 
 	// Option name constants.
 	public static $option_url       = 'gatecha_url';
