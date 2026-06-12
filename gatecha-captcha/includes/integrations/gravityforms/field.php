@@ -80,7 +80,7 @@ class GateCHA_GFForms_Field extends GF_Field {
 	public function validate( $value, $form ) {
 		$plugin = GateCHA::$instance;
 		if ( $plugin->is_gravityforms_enabled() ) {
-			$payload = isset( $_POST['altcha'] ) ? sanitize_text_field( wp_unslash( $_POST['altcha'] ) ) : ''; // phpcs:ignore
+			$payload = isset( $_POST['altcha'] ) ? sanitize_text_field( wp_unslash( $_POST['altcha'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Public form submission. The ALTCHA token is itself the anti-bot check and is verified server-side by GateCHA; no privileged or data-modifying action is performed on this read.
 			if ( false === $plugin->verify( $payload ) ) {
 				$this->failed_validation  = true;
 				$this->validation_message = esc_html__( 'CAPTCHA verification failed.', 'gatecha-captcha' );

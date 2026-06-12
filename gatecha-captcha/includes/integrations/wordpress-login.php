@@ -44,13 +44,13 @@ add_filter( 'authenticate', function ( $user, $username, $password ) {
 	}
 
 	// Let WooCommerce login handle its own verification.
-	if ( gatecha_plugin_active( 'woocommerce' ) && isset( $_POST['woocommerce-login-nonce'] ) ) { // phpcs:ignore
+	if ( gatecha_plugin_active( 'woocommerce' ) && isset( $_POST['woocommerce-login-nonce'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Detecting which host form is being submitted by field presence only; no data is processed and the host handles its own nonce.
 		return $user;
 	}
 
 	$plugin = GateCHA::$instance;
 	if ( $plugin->is_wp_login_enabled() ) {
-		$payload = isset( $_POST['altcha'] ) ? sanitize_text_field( wp_unslash( $_POST['altcha'] ) ) : ''; // phpcs:ignore
+		$payload = isset( $_POST['altcha'] ) ? sanitize_text_field( wp_unslash( $_POST['altcha'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Public form submission. The ALTCHA token is itself the anti-bot check and is verified server-side by GateCHA; no privileged or data-modifying action is performed on this read.
 		if ( false === $plugin->verify( $payload ) ) {
 			return new WP_Error(
 				'gatecha_error',

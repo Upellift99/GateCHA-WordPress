@@ -59,7 +59,7 @@ if ( gatecha_plugin_active( 'contact-form-7' ) ) :
 
 		$plugin = GateCHA::$instance;
 		if ( $plugin->is_cf7_enabled() ) {
-			$payload = isset( $_POST['altcha'] ) ? sanitize_text_field( wp_unslash( $_POST['altcha'] ) ) : ''; // phpcs:ignore
+			$payload = isset( $_POST['altcha'] ) ? sanitize_text_field( wp_unslash( $_POST['altcha'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Public form submission. The ALTCHA token is itself the anti-bot check and is verified server-side by GateCHA; no privileged or data-modifying action is performed on this read.
 			if ( false === $plugin->verify( $payload ) ) {
 				return true;
 			}

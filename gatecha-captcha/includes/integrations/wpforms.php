@@ -31,7 +31,7 @@ if ( gatecha_plugin_active( 'wpforms' ) ) :
 	add_action( 'wpforms_process', function ( $fields, $entry, $form_data ) {
 		$plugin = GateCHA::$instance;
 		if ( $plugin->is_wpforms_enabled() ) {
-			$payload = isset( $_POST['altcha'] ) ? sanitize_text_field( wp_unslash( $_POST['altcha'] ) ) : ''; // phpcs:ignore
+			$payload = isset( $_POST['altcha'] ) ? sanitize_text_field( wp_unslash( $_POST['altcha'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Public form submission. The ALTCHA token is itself the anti-bot check and is verified server-side by GateCHA; no privileged or data-modifying action is performed on this read.
 			if ( false === $plugin->verify( $payload ) ) {
 				wpforms()->process->errors[ $form_data['id'] ]['header'] = esc_html__( 'CAPTCHA verification failed.', 'gatecha-captcha' );
 			}

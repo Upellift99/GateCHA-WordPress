@@ -44,7 +44,7 @@ add_filter( 'preprocess_comment', function ( $commentdata ) {
 
 	$plugin = GateCHA::$instance;
 	if ( $plugin->is_wp_comments_enabled() ) {
-		$payload = isset( $_POST['altcha'] ) ? sanitize_text_field( wp_unslash( $_POST['altcha'] ) ) : ''; // phpcs:ignore
+		$payload = isset( $_POST['altcha'] ) ? sanitize_text_field( wp_unslash( $_POST['altcha'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Public form submission. The ALTCHA token is itself the anti-bot check and is verified server-side by GateCHA; no privileged or data-modifying action is performed on this read.
 		if ( false === $plugin->verify( $payload ) ) {
 			wp_die(
 				'<p>' . esc_html__( 'CAPTCHA verification failed.', 'gatecha-captcha' ) . '</p>',

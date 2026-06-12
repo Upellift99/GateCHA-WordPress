@@ -42,7 +42,7 @@ if ( gatecha_plugin_active( 'forminator' ) ) :
 	add_filter( 'forminator_cform_form_is_submittable', function ( $can_show, $id, $form_settings ) {
 		$plugin = GateCHA::$instance;
 		if ( $plugin->is_forminator_enabled() ) {
-			$payload = isset( $_POST['altcha'] ) ? sanitize_text_field( wp_unslash( $_POST['altcha'] ) ) : ''; // phpcs:ignore
+			$payload = isset( $_POST['altcha'] ) ? sanitize_text_field( wp_unslash( $_POST['altcha'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Public form submission. The ALTCHA token is itself the anti-bot check and is verified server-side by GateCHA; no privileged or data-modifying action is performed on this read.
 			if ( false === $plugin->verify( $payload ) ) {
 				return array(
 					'can_submit' => false,

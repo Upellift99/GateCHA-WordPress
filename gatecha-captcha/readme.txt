@@ -1,5 +1,5 @@
 === GateCHA CAPTCHA ===
-Contributors: upellift
+Contributors: gatecha
 Tags: captcha, gatecha, altcha, spam, proof-of-work
 Requires at least: 6.0
 Tested up to: 7.0

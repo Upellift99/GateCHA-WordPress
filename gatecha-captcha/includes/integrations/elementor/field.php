@@ -61,7 +61,7 @@ class GateCHA_Elementor_Form_Field extends \ElementorPro\Modules\Forms\Fields\Fi
 	public function validation( $field, $record, $ajax_handler ) {
 		$plugin = GateCHA::$instance;
 		if ( $plugin->is_elementor_enabled() ) {
-			$payload = isset( $_POST['altcha'] ) ? sanitize_text_field( wp_unslash( $_POST['altcha'] ) ) : ''; // phpcs:ignore
+			$payload = isset( $_POST['altcha'] ) ? sanitize_text_field( wp_unslash( $_POST['altcha'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Public form submission. The ALTCHA token is itself the anti-bot check and is verified server-side by GateCHA; no privileged or data-modifying action is performed on this read.
 			if ( false === $plugin->verify( $payload ) ) {
 				$ajax_handler->add_error(
 					$field['id'],
