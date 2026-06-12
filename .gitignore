@@ -24,3 +24,6 @@ composer.lock
 # WordPress
 wp-config.php
 wp-content/uploads/
+
+# Build artifacts
+*.zip

@@ -1,10 +1,10 @@
 <?php
 /**
  * Plugin Name: GateCHA CAPTCHA
- * Plugin URI:  https://github.com/Upellift99/GateCHA
+ * Plugin URI:  https://gatecha.org
  * Description: Self-hosted ALTCHA proof-of-work CAPTCHA via GateCHA. Protects WordPress forms without cookies, fingerprinting, or third-party services.
- * Author:      Upellift
- * Author URI:  https://github.com/Upellift99
+ * Author:      GateCHA
+ * Author URI:  https://gatecha.org
  * Version:     1.0.0
  * Requires at least: 6.0
  * Requires PHP: 7.4

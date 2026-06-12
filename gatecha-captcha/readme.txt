@@ -12,7 +12,7 @@ Self-hosted ALTCHA proof-of-work CAPTCHA via GateCHA. Protects WordPress forms w
 
 == Description ==
 
-GateCHA CAPTCHA connects your WordPress site to your own [GateCHA](https://github.com/Upellift99/GateCHA) instance — a self-hosted, open-source CAPTCHA management service based on the ALTCHA proof-of-work protocol.
+GateCHA CAPTCHA connects your WordPress site to your own [GateCHA](https://gatecha.org) instance — a self-hosted, open-source CAPTCHA management service based on the ALTCHA proof-of-work protocol.
 
 **Why GateCHA?**
 
@@ -51,14 +51,14 @@ That's it. Enable CAPTCHA on the forms you want to protect.
 
 **Requirements:**
 
-* A running [GateCHA](https://github.com/Upellift99/GateCHA) instance
+* A running [GateCHA](https://gatecha.org) instance
 * An API key from your GateCHA dashboard (starts with `gk_`)
 
 == Frequently Asked Questions ==
 
 = What is GateCHA? =
 
-GateCHA is a self-hosted CAPTCHA management service that wraps the ALTCHA proof-of-work protocol. It provides API key management, multi-site support, and an analytics dashboard. See [the GateCHA repository](https://github.com/Upellift99/GateCHA) for more information.
+GateCHA is a self-hosted CAPTCHA management service that wraps the ALTCHA proof-of-work protocol. It provides API key management, multi-site support, and an analytics dashboard. See [the GateCHA website](https://gatecha.org) for more information.
 
 = How does proof-of-work CAPTCHA work? =
 
