@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: GateCHA CAPTCHA
- * Plugin URI:  https://gatecha.org
+ * Plugin URI:  https://gatecha.org/wordpress
  * Description: Self-hosted ALTCHA proof-of-work CAPTCHA via GateCHA. Protects WordPress forms without cookies, fingerprinting, or third-party services.
  * Author:      GateCHA
  * Author URI:  https://gatecha.org
