@@ -99,6 +99,21 @@ No data is sent to any third-party service. All communication is between your Wo
 
 * GateCHA source code: [https://github.com/Upellift99/GateCHA](https://github.com/Upellift99/GateCHA)
 
+== Source Code ==
+
+The full source of this plugin is available at [https://github.com/Upellift99/GateCHA-WordPress](https://github.com/Upellift99/GateCHA-WordPress).
+
+The plugin's own JavaScript (`assets/js/gatecha.js`) and CSS (`assets/css/gatecha.css`) are shipped unminified and human-readable.
+
+The plugin bundles one third-party library in minified form:
+
+* **ALTCHA widget** — `assets/js/altcha-widget.min.js`
+    * Version: 2.2.4
+    * License: MIT
+    * Source code: [https://github.com/altcha-org/altcha](https://github.com/altcha-org/altcha)
+
+This is the unmodified production build distributed on npm as the [`altcha`](https://www.npmjs.com/package/altcha) package (it corresponds to the package's `dist/altcha.js` ES module build). To obtain and review the human-readable source, run `npm install altcha@2.2.4` and inspect the package's `src/` directory on [GitHub](https://github.com/altcha-org/altcha).
+
 == Changelog ==
 
 = 1.0.0 =

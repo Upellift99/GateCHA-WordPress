@@ -31,6 +31,9 @@ class GateCHA {
 	 * @param string $plugin_url Plugin base URL (with trailing slash).
 	 */
 	public static function set_asset_urls( $plugin_url ) {
+		// altcha-widget.min.js is the unmodified production build of the ALTCHA
+		// widget (v2.2.4, MIT). Source code: https://github.com/altcha-org/altcha
+		// (npm package "altcha", file dist/altcha.js). See readme.txt.
 		self::$widget_script_src = $plugin_url . 'assets/js/altcha-widget.min.js';
 		self::$widget_style_src  = $plugin_url . 'assets/css/gatecha.css';
 		self::$wp_script_src     = $plugin_url . 'assets/js/gatecha.js';
