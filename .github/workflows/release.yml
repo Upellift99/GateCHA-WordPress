@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
@@ -34,7 +34,7 @@ jobs:
           zip -r gatecha-captcha-${GITHUB_REF_NAME}.zip gatecha-captcha
 
       - name: Upload release asset
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: gatecha-captcha-${{ github.ref_name }}.zip
         env:
