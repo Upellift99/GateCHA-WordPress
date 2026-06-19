@@ -1,0 +1,44 @@
+name: Build plugin ZIP (PR)
+
+# Builds an installable plugin ZIP on every pull request and attaches it as a
+# downloadable artifact, so a branch can be tested on a real WordPress site
+# before it is merged/published. This never tags or deploys anything — see
+# release.yml (tags v*) for the WordPress.org deploy.
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build installable ZIP
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Build plugin ZIP
+        run: |
+          mkdir -p build/gatecha-captcha
+          rsync -a ./ build/gatecha-captcha/ \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='.wordpress-org' \
+            --exclude='.qodo' \
+            --exclude='.claude' \
+            --exclude='.gitignore' \
+            --exclude='.gitattributes' \
+            --exclude='.distignore' \
+            --exclude='CLAUDE.md' \
+            --exclude='build'
+          cd build && zip -rq gatecha-captcha.zip gatecha-captcha
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gatecha-captcha-pr${{ github.event.pull_request.number || github.run_id }}
+          path: build/gatecha-captcha.zip
+          if-no-files-found: error
+          retention-days: 30
