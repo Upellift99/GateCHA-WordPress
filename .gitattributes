@@ -1,0 +1,14 @@
+* text=auto !eol
+
+# Treat binary assets as binary regardless of location
+*.jpg   -text
+*.jpeg  -text
+*.png   -text
+*.gif   -text
+*.ico   -text
+*.svg   -text
+*.mo    -text
+*.ttf   -text
+*.woff  -text
+*.woff2 -text
+*.zip   -text

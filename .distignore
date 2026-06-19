@@ -1,0 +1,28 @@
+# Files and directories that must NOT be deployed to the WordPress.org SVN repo.
+# The 10up deploy action rsyncs the repo root into SVN trunk, excluding these.
+
+# Dev tooling / VCS
+/.git
+/.github
+/.wordpress-org
+/.qodo
+/.claude
+/node_modules
+
+# Build artifacts (produced by the release workflow)
+/build
+*.zip
+
+# Dotfiles that only matter on GitHub
+/.gitignore
+/.gitattributes
+/.distignore
+/.editorconfig
+/CLAUDE.md
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.log
+*.swp
+*.swo

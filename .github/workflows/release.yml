@@ -1,4 +1,4 @@
-name: Build Plugin ZIP
+name: Release & Deploy to WordPress.org
 
 on:
   push:
@@ -9,7 +9,8 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  release:
+    name: Build ZIP & deploy to WordPress.org
     runs-on: ubuntu-latest
 
     steps:
@@ -24,14 +25,26 @@ jobs:
       - name: Generate translation template (.pot)
         run: |
           curl -sL https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o wp-cli.phar
-          php wp-cli.phar i18n make-pot gatecha-captcha gatecha-captcha/languages/gatecha-captcha.pot \
+          php wp-cli.phar i18n make-pot . languages/gatecha-captcha.pot \
             --domain=gatecha-captcha \
-            --exclude=assets,node_modules
+            --exclude=.github,.wordpress-org,.qodo,.claude,build,node_modules
           rm wp-cli.phar
 
-      - name: Create ZIP
+      - name: Build plugin ZIP
         run: |
-          zip -r gatecha-captcha-${GITHUB_REF_NAME}.zip gatecha-captcha
+          mkdir -p build/gatecha-captcha
+          rsync -a ./ build/gatecha-captcha/ \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='.wordpress-org' \
+            --exclude='.qodo' \
+            --exclude='.claude' \
+            --exclude='.gitignore' \
+            --exclude='.gitattributes' \
+            --exclude='.distignore' \
+            --exclude='CLAUDE.md' \
+            --exclude='build'
+          cd build && zip -rq ../gatecha-captcha-${GITHUB_REF_NAME}.zip gatecha-captcha
 
       - name: Upload release asset
         uses: softprops/action-gh-release@v3
@@ -39,3 +52,11 @@ jobs:
           files: gatecha-captcha-${{ github.ref_name }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy to WordPress.org SVN
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SLUG: gatecha-captcha
+          ASSETS_DIR: .wordpress-org

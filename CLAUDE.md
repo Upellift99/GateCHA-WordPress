@@ -19,39 +19,39 @@ via its API (`/api/v1/challenge` and `/api/v1/verify`), ensuring stats
 
 ## Plugin Structure
 
+The plugin files live at the **repo root** (not in a subdirectory), so the
+WordPress.org SVN deploy maps the root straight into `trunk/`. The release
+workflow repackages them into a top-level `gatecha-captcha/` folder for the
+GitHub ZIP.
+
 GateCHA-WordPress/
-├── CLAUDE.md                    - Project guide
-├── LICENSE                      - GPL-2.0-or-later
-├── .gitignore
-├── .github/                     - GitHub Actions workflows
-└── gatecha-captcha/             - WordPress plugin directory
-    ├── gatecha-captcha.php      - Main plugin file (headers, hooks, init)
-    ├── includes/
+├── gatecha-captcha.php          - Main plugin file (headers, hooks, init)
+├── readme.txt                   - WordPress.org plugin page
+├── uninstall.php                - Cleanup on plugin deletion
+├── includes/
 │   ├── class-gatecha.php        - Core class: API calls, verify logic
 │   ├── class-gatecha-admin.php  - Admin settings page (Settings → GateCHA)
 │   └── integrations/            - One file per integration
-│       ├── wordpress-login.php
-│       ├── wordpress-register.php
-│       ├── wordpress-comments.php
-│       ├── wordpress-reset-password.php
-│       ├── woocommerce-login.php
-│       ├── woocommerce-register.php
-│       ├── woocommerce-reset-password.php
-│       ├── contact-form-7.php
-│       ├── wpforms.php
-│       ├── gravityforms.php
-│       ├── elementor.php
-│       ├── forminator.php
-│       ├── formidable.php
-│       └── html-forms.php
-    ├── assets/
-    │   ├── js/
-    │   │   └── altcha-widget.min.js - ALTCHA Web Component
-    │   └── css/
-    │       └── gatecha.css
-    ├── languages/               - i18n (.pot, .po, .mo)
-    ├── readme.txt               - WordPress.org plugin page
-    └── uninstall.php            - Cleanup on plugin deletion
+│       ├── wordpress-login.php  (+ register, comments, reset-password)
+│       ├── woocommerce-*.php     - login, register, reset-password
+│       ├── contact-form-7.php / wpforms.php / gravityforms.php
+│       └── elementor.php / forminator.php / formidable.php / html-forms.php
+├── assets/
+│   ├── js/altcha-widget.min.js  - ALTCHA Web Component
+│   └── css/gatecha.css
+├── languages/                   - i18n (.pot, .po, .mo)
+│
+├── CLAUDE.md                    - Project guide (not deployed)
+├── LICENSE                      - GPL-2.0-or-later
+├── .distignore                  - Files excluded from the SVN deploy
+├── .gitattributes               - Line-ending / binary handling
+├── .wordpress-org/              - WP.org page assets (icon, banner) — not the plugin
+└── .github/workflows/
+    ├── release.yml              - On `v*` tag: build ZIP + deploy to SVN trunk/tag
+    └── update-readme-assets.yml - On readme/asset push: update WP.org page only
+
+Deploy uses the 10up GitHub Actions and requires repo secrets
+`SVN_USERNAME` (WP.org account `gatecha`) and `SVN_PASSWORD`.
 
 ## Key Architecture Decisions
 
