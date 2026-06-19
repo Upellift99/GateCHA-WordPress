@@ -17,18 +17,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '7.4'
-
-      - name: Generate translation template (.pot)
-        run: |
-          curl -sL https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o wp-cli.phar
-          php wp-cli.phar i18n make-pot . languages/gatecha-captcha.pot \
-            --domain=gatecha-captcha \
-            --exclude=.github,.wordpress-org,.qodo,.claude,build,node_modules
-          rm wp-cli.phar
+      # The translation template (languages/gatecha-captcha.pot) is committed to
+      # the repo and shipped as-is — it is NOT regenerated here. make-pot rewrites
+      # the POT-Creation-Date header on every run, which makes SVN trunk's .pot
+      # differ from the repo and trips the update-readme-assets guard. Regenerate
+      # it manually with wp-cli i18n make-pot when translatable strings change.
 
       - name: Build plugin ZIP
         run: |
