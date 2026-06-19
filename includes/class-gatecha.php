@@ -32,8 +32,8 @@ class GateCHA {
 	 */
 	public static function set_asset_urls( $plugin_url ) {
 		// altcha-widget.min.js is the unmodified production build of the ALTCHA
-		// widget (v2.2.4, MIT). Source code: https://github.com/altcha-org/altcha
-		// (npm package "altcha", file dist/altcha.js). See readme.txt.
+		// widget (v3.1.0, MIT). Source code: https://github.com/altcha-org/altcha
+		// (npm package "altcha", file dist/main/altcha.min.js). See readme.txt.
 		self::$widget_script_src = $plugin_url . 'assets/js/altcha-widget.min.js';
 		self::$widget_style_src  = $plugin_url . 'assets/css/gatecha.css';
 		self::$wp_script_src     = $plugin_url . 'assets/js/gatecha.js';
@@ -68,16 +68,14 @@ class GateCHA {
 	 * @var array
 	 */
 	public static $html_escape_allowed_tags = array(
+		// ALTCHA widget v3 attribute surface (see render_widget()). Most options
+		// moved into the single JSON `configuration` attribute in v3.
 		'altcha-widget' => array(
-			'challengeurl'   => array(),
-			'strings'        => array(),
+			'challenge'      => array(),
+			'configuration'  => array(),
+			'language'       => array(),
 			'auto'           => array(),
-			'hidelogo'       => array(),
-			'hidefooter'     => array(),
 			'name'           => array(),
-			'maxnumber'      => array(),
-			'refetchonexpire' => array(),
-			'expire'         => array(),
 		),
 		'div'   => array(
 			'class' => array(),
@@ -244,10 +242,20 @@ class GateCHA {
 		$url     = $this->get_url();
 		$api_key = $this->get_api_key();
 
+		$body = array( 'payload' => $payload );
+
+		// Attach the optional privacy-preserving interaction sample if the form
+		// sent one. The server scores it in Monitor mode only — it never changes
+		// the verification result, so a missing or malformed sample is harmless.
+		$his_signals = $this->read_his_signals();
+		if ( null !== $his_signals ) {
+			$body['his_signals'] = $his_signals;
+		}
+
 		$response = wp_remote_post(
 			$url . '/api/v1/verify',
 			array(
-				'body'    => wp_json_encode( array( 'payload' => $payload ) ),
+				'body'    => wp_json_encode( $body ),
 				'headers' => array(
 					'Authorization' => 'Bearer ' . $api_key,
 					'Content-Type'  => 'application/json',
@@ -275,6 +283,50 @@ class GateCHA {
 		return $this->handle_server_error(
 			sprintf( 'HTTP %d — %s', $status, wp_remote_retrieve_response_message( $response ) )
 		);
+	}
+
+	/**
+	 * Read and sanitise the optional HIS interaction sample from the request.
+	 *
+	 * The sample is a small JSON object of privacy-preserving aggregates emitted
+	 * by gatecha.js into the `gatecha_his_signals` hidden field. Only known
+	 * numeric keys are kept; everything else is discarded. Returns null when no
+	 * usable sample is present.
+	 *
+	 * @return array<string,int|float>|null
+	 */
+	private function read_his_signals() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Public form submission. This is optional, Monitor-only telemetry validated to numeric fields below; no privileged or data-modifying action is performed on this read.
+		if ( empty( $_POST['gatecha_his_signals'] ) ) {
+			return null;
+		}
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- See note above.
+		$raw  = sanitize_text_field( wp_unslash( $_POST['gatecha_his_signals'] ) );
+		$data = json_decode( $raw, true );
+		if ( ! is_array( $data ) ) {
+			return null;
+		}
+
+		$allowed = array(
+			'duration_ms',
+			'time_to_first_ms',
+			'pointer_events',
+			'pointer_distance',
+			'scrolls',
+			'touches',
+			'keydowns',
+			'key_interval_stdev_ms',
+		);
+
+		$clean = array();
+		foreach ( $allowed as $key ) {
+			if ( isset( $data[ $key ] ) && is_numeric( $data[ $key ] ) ) {
+				$clean[ $key ] = 0 + $data[ $key ];
+			}
+		}
+
+		return empty( $clean ) ? null : $clean;
 	}
 
 	/**
@@ -319,18 +371,45 @@ class GateCHA {
 	 * @return array
 	 */
 	public function get_translations() {
-		$hide_branding = (bool) get_option( self::$option_hide_branding, 0 );
-
+		// ALTCHA widget v3 resolves UI strings from its i18n store (no per-widget
+		// `strings` attribute anymore). gatecha.js registers this complete set
+		// into the store for the active language. We provide every key the widget
+		// can show so nothing falls back to an untranslated default; branding is
+		// hidden via the `configuration` attribute, not by blanking the footer.
 		$translations = array(
-			'error'     => __( 'Verification failed. Try again later.', 'gatecha-captcha' ),
-			'footer'    => $hide_branding ? '' : __( 'Protected by <a href="https://altcha.org" target="_blank">ALTCHA</a>', 'gatecha-captcha' ),
-			'label'     => __( "I'm not a robot", 'gatecha-captcha' ),
-			'verified'  => __( 'Verified', 'gatecha-captcha' ),
-			'verifying' => __( 'Verifying...', 'gatecha-captcha' ),
-			'waitAlert' => __( 'Verifying... please wait.', 'gatecha-captcha' ),
+			'ariaLinkLabel'      => __( 'ALTCHA (official website)', 'gatecha-captcha' ),
+			'cancel'             => __( 'Cancel', 'gatecha-captcha' ),
+			'enterCode'          => __( 'Enter code', 'gatecha-captcha' ),
+			'enterCodeAria'      => __( 'Enter code you hear. Press Space to play audio.', 'gatecha-captcha' ),
+			'enterCodeFromImage' => __( 'To proceed, please enter the code from the image below.', 'gatecha-captcha' ),
+			'error'              => __( 'Verification failed. Try again later.', 'gatecha-captcha' ),
+			'expired'            => __( 'Verification expired. Try again.', 'gatecha-captcha' ),
+			'footer'             => __( 'Protected by <a href="https://altcha.org" target="_blank">ALTCHA</a>', 'gatecha-captcha' ),
+			'getAudioChallenge'  => __( 'Get an audio challenge', 'gatecha-captcha' ),
+			'label'              => __( "I'm not a robot", 'gatecha-captcha' ),
+			'loading'            => __( 'Loading...', 'gatecha-captcha' ),
+			'reload'             => __( 'Reload', 'gatecha-captcha' ),
+			'verify'             => __( 'Verify', 'gatecha-captcha' ),
+			'verificationRequired' => __( 'Verification required!', 'gatecha-captcha' ),
+			'verified'           => __( 'Verified', 'gatecha-captcha' ),
+			'verifying'          => __( 'Verifying...', 'gatecha-captcha' ),
+			'waitAlert'          => __( 'Verifying... please wait.', 'gatecha-captcha' ),
 		);
 
 		return apply_filters( 'gatecha_translations', $translations );
+	}
+
+	/**
+	 * Resolve the 2-letter language code for the widget from the site locale.
+	 *
+	 * @return string
+	 */
+	public function get_language() {
+		$lang = strtolower( substr( (string) get_locale(), 0, 2 ) );
+		if ( '' === $lang ) {
+			$lang = 'en';
+		}
+		return apply_filters( 'gatecha_language', $lang );
 	}
 
 	/**
@@ -352,19 +431,28 @@ class GateCHA {
 		$auto_verify    = (bool) get_option( self::$option_auto_verify, 1 );
 		$hide_branding  = (bool) get_option( self::$option_hide_branding, 0 );
 
+		// ALTCHA widget v3 takes most options through a single JSON `configuration`
+		// attribute. We explicitly disable ALTCHA's own Human Interaction
+		// Signature collection: GateCHA performs its own privacy-preserving HIS
+		// via the gatecha_his_signals field (see gatecha.js / verify()), and the
+		// plugin promises no fingerprinting.
+		$configuration = array(
+			'humanInteractionSignature' => false,
+		);
+
+		if ( $hide_branding ) {
+			$configuration['hideLogo']   = true;
+			$configuration['hideFooter'] = true;
+		}
+
 		$attrs = array(
-			'challengeurl'    => $this->get_challengeurl(),
-			'strings'         => wp_json_encode( $this->get_translations() ),
-			'refetchonexpire' => '',
+			'challenge'     => $this->get_challengeurl(),
+			'language'      => $language ? $language : $this->get_language(),
+			'configuration' => wp_json_encode( $configuration ),
 		);
 
 		if ( $auto_verify ) {
 			$attrs['auto'] = 'onfocus';
-		}
-
-		if ( $hide_branding ) {
-			$attrs['hidelogo']   = '';
-			$attrs['hidefooter'] = '';
 		}
 
 		if ( $name ) {
@@ -390,6 +478,10 @@ class GateCHA {
 		}
 
 		$html = '<altcha-widget' . $attributes . '></altcha-widget>';
+
+		// Privacy-preserving HIS aggregate, filled in by gatecha.js on submit.
+		// Optional and Monitor-only server-side; never blocks a submission.
+		$html .= '<input type="hidden" name="gatecha_his_signals" class="gatecha-his-signals" value="" />';
 
 		$html .= '<noscript>' . esc_html__( 'This form requires JavaScript.', 'gatecha-captcha' ) . '</noscript>';
 
@@ -430,6 +522,23 @@ function gatecha_enqueue_scripts() {
 		GATECHA_VERSION,
 		true
 	);
+
+	// Hand the localized widget strings + language to gatecha.js, which registers
+	// them into the ALTCHA v3 i18n store (the v2 per-widget `strings` attribute
+	// no longer exists). Localize only once even if several forms render.
+	static $localized = false;
+	$plugin = GateCHA::$instance;
+	if ( ! $localized && $plugin ) {
+		$localized = true;
+		wp_localize_script(
+			'gatecha-script',
+			'gatechaI18n',
+			array(
+				'language' => $plugin->get_language(),
+				'strings'  => $plugin->get_translations(),
+			)
+		);
+	}
 }
 
 /**
