@@ -88,6 +88,10 @@ Then in your tests, set the `altcha` hidden input to this token before submittin
 
 The plugin will accept the token as a valid verification without contacting the GateCHA server. **Never define this constant in production.**
 
+== Screenshots ==
+
+1. The GateCHA server dashboard — challenges, verifications and failures are tracked centrally across all your sites and API keys.
+
 == External Services ==
 
 This plugin connects to your self-hosted GateCHA instance for CAPTCHA challenge generation and verification. Two API calls are made:
