@@ -8,13 +8,19 @@ on:
       - 'readme.txt'
       - '.wordpress-org/**'
 
+# Serialize with release.yml: both touch the same WordPress.org SVN repo. Shared
+# group name => if a release deploy is running, this asset update queues behind it.
+concurrency:
+  group: wporg-svn-${{ github.repository }}
+  cancel-in-progress: false
+
 jobs:
   update:
     name: Update readme & assets
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: WordPress.org plugin readme/assets update
         uses: 10up/action-wordpress-plugin-asset-update@stable
         env:

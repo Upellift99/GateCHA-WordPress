@@ -8,6 +8,13 @@ on:
 permissions:
   contents: write
 
+# Serialize with update-readme-assets.yml: both touch the same WordPress.org SVN
+# repo, so they must never run at once (a concurrent deploy + asset update races
+# on trunk). Shared group name => the second run queues until the first finishes.
+concurrency:
+  group: wporg-svn-${{ github.repository }}
+  cancel-in-progress: false
+
 jobs:
   release:
     name: Build ZIP & deploy to WordPress.org
