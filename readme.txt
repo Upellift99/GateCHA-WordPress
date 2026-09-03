@@ -4,7 +4,7 @@ Tags: captcha, gatecha, altcha, spam, proof-of-work
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -131,13 +131,19 @@ The plugin's own JavaScript (`assets/js/gatecha.js`) and CSS (`assets/css/gatech
 The plugin bundles one third-party library in minified form:
 
 * **ALTCHA widget** — `assets/js/altcha-widget.min.js`
-    * Version: 2.2.4
+    * Version: 3.2.2
     * License: MIT
     * Source code: [https://github.com/altcha-org/altcha](https://github.com/altcha-org/altcha)
 
-This is the unmodified production build distributed on npm as the [`altcha`](https://www.npmjs.com/package/altcha) package (it corresponds to the package's `dist/altcha.js` ES module build). To obtain and review the human-readable source, run `npm install altcha@2.2.4` and inspect the package's `src/` directory on [GitHub](https://github.com/altcha-org/altcha).
+This is the unmodified production build distributed on npm as the [`altcha`](https://www.npmjs.com/package/altcha) package (it corresponds to the package's `dist/main/altcha.min.js` build). To obtain and review the human-readable source, run `npm install altcha@3.2.2` and inspect the package's `src/` directory on [GitHub](https://github.com/altcha-org/altcha).
 
 == Changelog ==
+
+= 1.2.0 =
+* Bundled ALTCHA widget updated from 2.2.4 to 3.2.2.
+* ALTCHA's own interaction signature is switched off explicitly, in line with the plugin's no-fingerprinting promise.
+* Widget translations now register into the widget's i18n store, and the language follows your site locale.
+* No change to the proof-of-work itself, which is identical in both widget versions.
 
 = 1.1.0 =
 * Optional interaction signals (HIS), off by default: the collector is loaded from your own GateCHA instance and its aggregates are forwarded to /api/v1/verify on every protected form.
@@ -153,6 +159,9 @@ This is the unmodified production build distributed on npm as the [`altcha`](htt
 * `[gatecha]` shortcode for custom form placement.
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+Updates the bundled ALTCHA widget to 3.2.2. Same proof-of-work, same settings; check your forms once after updating.
 
 = 1.1.0 =
 Adds optional interaction signals for spam that solves the proof-of-work. Nothing changes until you enable it under Settings → GateCHA.

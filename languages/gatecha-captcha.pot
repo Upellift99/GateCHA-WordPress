@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: GateCHA CAPTCHA 1.1.0\n"
+"Project-Id-Version: GateCHA CAPTCHA 1.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/GateCHA-WordPress\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-03T09:58:20+00:00\n"
+"POT-Creation-Date: 2026-09-03T09:59:15+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: gatecha-captcha\n"
@@ -231,31 +231,75 @@ msgstr ""
 msgid "GateCHA CAPTCHA for WordPress — v%s"
 msgstr ""
 
-#: includes/class-gatecha.php:477
-msgid "Verification failed. Try again later."
-msgstr ""
-
 #: includes/class-gatecha.php:478
-msgid "Protected by <a href=\"https://altcha.org\" target=\"_blank\">ALTCHA</a>"
+msgid "ALTCHA (official website)"
 msgstr ""
 
 #: includes/class-gatecha.php:479
-msgid "I'm not a robot"
+msgid "Cancel"
 msgstr ""
 
 #: includes/class-gatecha.php:480
-msgid "Verified"
+msgid "Enter code"
 msgstr ""
 
 #: includes/class-gatecha.php:481
-msgid "Verifying..."
+msgid "Enter code you hear. Press Space to play audio."
 msgstr ""
 
 #: includes/class-gatecha.php:482
+msgid "To proceed, please enter the code from the image below."
+msgstr ""
+
+#: includes/class-gatecha.php:483
+msgid "Verification failed. Try again later."
+msgstr ""
+
+#: includes/class-gatecha.php:484
+msgid "Verification expired. Try again."
+msgstr ""
+
+#: includes/class-gatecha.php:485
+msgid "Protected by <a href=\"https://altcha.org\" target=\"_blank\">ALTCHA</a>"
+msgstr ""
+
+#: includes/class-gatecha.php:486
+msgid "Get an audio challenge"
+msgstr ""
+
+#: includes/class-gatecha.php:487
+msgid "I'm not a robot"
+msgstr ""
+
+#: includes/class-gatecha.php:488
+msgid "Loading..."
+msgstr ""
+
+#: includes/class-gatecha.php:489
+msgid "Reload"
+msgstr ""
+
+#: includes/class-gatecha.php:490
+msgid "Verification required!"
+msgstr ""
+
+#: includes/class-gatecha.php:491
+msgid "Verified"
+msgstr ""
+
+#: includes/class-gatecha.php:492
+msgid "Verify"
+msgstr ""
+
+#: includes/class-gatecha.php:493
+msgid "Verifying..."
+msgstr ""
+
+#: includes/class-gatecha.php:494
 msgid "Verifying... please wait."
 msgstr ""
 
-#: includes/class-gatecha.php:547
+#: includes/class-gatecha.php:581
 msgid "This form requires JavaScript."
 msgstr ""
 

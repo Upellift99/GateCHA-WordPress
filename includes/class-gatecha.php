@@ -32,8 +32,8 @@ class GateCHA {
 	 */
 	public static function set_asset_urls( $plugin_url ) {
 		// altcha-widget.min.js is the unmodified production build of the ALTCHA
-		// widget (v2.2.4, MIT). Source code: https://github.com/altcha-org/altcha
-		// (npm package "altcha", file dist/altcha.js). See readme.txt.
+		// widget (v3.2.2, MIT). Source code: https://github.com/altcha-org/altcha
+		// (npm package "altcha", file dist/main/altcha.min.js). See readme.txt.
 		self::$widget_script_src = $plugin_url . 'assets/js/altcha-widget.min.js';
 		self::$widget_style_src  = $plugin_url . 'assets/css/gatecha.css';
 		self::$wp_script_src     = $plugin_url . 'assets/js/gatecha.js';
@@ -95,16 +95,14 @@ class GateCHA {
 	 * @var array
 	 */
 	public static $html_escape_allowed_tags = array(
+		// ALTCHA widget v3 attribute surface (see render_widget()). Most options
+		// moved into the single JSON `configuration` attribute in v3.
 		'altcha-widget' => array(
-			'challengeurl'   => array(),
-			'strings'        => array(),
-			'auto'           => array(),
-			'hidelogo'       => array(),
-			'hidefooter'     => array(),
-			'name'           => array(),
-			'maxnumber'      => array(),
-			'refetchonexpire' => array(),
-			'expire'         => array(),
+			'challenge'     => array(),
+			'configuration' => array(),
+			'language'      => array(),
+			'auto'          => array(),
+			'name'          => array(),
 		),
 		'div'   => array(
 			'class' => array(),
@@ -471,18 +469,45 @@ class GateCHA {
 	 * @return array
 	 */
 	public function get_translations() {
-		$hide_branding = (bool) get_option( self::$option_hide_branding, 0 );
-
+		// v3 resolves UI strings from a global i18n store; the per-widget
+		// `strings` attribute is gone, and gatecha.js registers this set for the
+		// active language instead. Every key the widget can show is provided so
+		// nothing falls back to an untranslated default. Branding is hidden
+		// through `configuration`, not by blanking the footer string.
 		$translations = array(
-			'error'     => __( 'Verification failed. Try again later.', 'gatecha-captcha' ),
-			'footer'    => $hide_branding ? '' : __( 'Protected by <a href="https://altcha.org" target="_blank">ALTCHA</a>', 'gatecha-captcha' ),
-			'label'     => __( "I'm not a robot", 'gatecha-captcha' ),
-			'verified'  => __( 'Verified', 'gatecha-captcha' ),
-			'verifying' => __( 'Verifying...', 'gatecha-captcha' ),
-			'waitAlert' => __( 'Verifying... please wait.', 'gatecha-captcha' ),
+			'ariaLinkLabel'        => __( 'ALTCHA (official website)', 'gatecha-captcha' ),
+			'cancel'               => __( 'Cancel', 'gatecha-captcha' ),
+			'enterCode'            => __( 'Enter code', 'gatecha-captcha' ),
+			'enterCodeAria'        => __( 'Enter code you hear. Press Space to play audio.', 'gatecha-captcha' ),
+			'enterCodeFromImage'   => __( 'To proceed, please enter the code from the image below.', 'gatecha-captcha' ),
+			'error'                => __( 'Verification failed. Try again later.', 'gatecha-captcha' ),
+			'expired'              => __( 'Verification expired. Try again.', 'gatecha-captcha' ),
+			'footer'               => __( 'Protected by <a href="https://altcha.org" target="_blank">ALTCHA</a>', 'gatecha-captcha' ),
+			'getAudioChallenge'    => __( 'Get an audio challenge', 'gatecha-captcha' ),
+			'label'                => __( "I'm not a robot", 'gatecha-captcha' ),
+			'loading'              => __( 'Loading...', 'gatecha-captcha' ),
+			'reload'               => __( 'Reload', 'gatecha-captcha' ),
+			'verificationRequired' => __( 'Verification required!', 'gatecha-captcha' ),
+			'verified'             => __( 'Verified', 'gatecha-captcha' ),
+			'verify'               => __( 'Verify', 'gatecha-captcha' ),
+			'verifying'            => __( 'Verifying...', 'gatecha-captcha' ),
+			'waitAlert'            => __( 'Verifying... please wait.', 'gatecha-captcha' ),
 		);
 
 		return apply_filters( 'gatecha_translations', $translations );
+	}
+
+	/**
+	 * Resolve the 2-letter language code for the widget from the site locale.
+	 *
+	 * @return string
+	 */
+	public function get_language() {
+		$lang = strtolower( substr( (string) get_locale(), 0, 2 ) );
+		if ( '' === $lang ) {
+			$lang = 'en';
+		}
+		return apply_filters( 'gatecha_language', $lang );
 	}
 
 	/**
@@ -505,19 +530,28 @@ class GateCHA {
 		$auto_verify    = (bool) get_option( self::$option_auto_verify, 1 );
 		$hide_branding  = (bool) get_option( self::$option_hide_branding, 0 );
 
+		// v3 takes most options through a single JSON `configuration` attribute.
+		// ALTCHA's own interaction signature is switched off deliberately: this
+		// plugin promises no fingerprinting, and where a site wants interaction
+		// scoring it comes from GateCHA's own collector, whose aggregates the
+		// instance is able to score.
+		$configuration = array(
+			'humanInteractionSignature' => false,
+		);
+
+		if ( $hide_branding ) {
+			$configuration['hideLogo']   = true;
+			$configuration['hideFooter'] = true;
+		}
+
 		$attrs = array(
-			'challengeurl'    => $this->get_challengeurl(),
-			'strings'         => wp_json_encode( $this->get_translations() ),
-			'refetchonexpire' => '',
+			'challenge'     => $this->get_challengeurl(),
+			'language'      => $language ? $language : $this->get_language(),
+			'configuration' => wp_json_encode( $configuration ),
 		);
 
 		if ( $auto_verify ) {
 			$attrs['auto'] = 'onfocus';
-		}
-
-		if ( $hide_branding ) {
-			$attrs['hidelogo']   = '';
-			$attrs['hidefooter'] = '';
 		}
 
 		if ( $name ) {
@@ -583,6 +617,23 @@ function gatecha_enqueue_scripts() {
 		GATECHA_VERSION,
 		true
 	);
+
+	// Hand the localized strings and language to gatecha.js, which registers
+	// them into the widget's i18n store. Localize once even if several forms
+	// render on the page.
+	static $localized = false;
+	$plugin = GateCHA::$instance;
+	if ( ! $localized && $plugin ) {
+		$localized = true;
+		wp_localize_script(
+			'gatecha-script',
+			'gatechaI18n',
+			array(
+				'language' => $plugin->get_language(),
+				'strings'  => $plugin->get_translations(),
+			)
+		);
+	}
 }
 
 /**
