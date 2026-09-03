@@ -70,6 +70,35 @@ with the plugin (no external CDN dependency).
 |---------------|--------------------------------------|--------------------------------------|
 | GateCHA URL   | Base URL of GateCHA instance         | `https://gatecha.example.com`        |
 | API Key       | GateCHA API key (`gk_` prefix)       | `gk_6e16d2ff387822c52426cdb6`        |
+| Collect Interaction Signals | Load the collector and forward `his_signals` to `/verify` (off by default) | checkbox |
+| Reject Suspected Automation | Fail verification when GateCHA flags the submission (needs the above) | checkbox |
+
+## Interaction Signals (HIS)
+
+Optional, off by default, and it needs GateCHA 0.7.0 or later.
+
+When enabled, `render_widget()` enqueues the collector the instance serves at
+`/api/public/his.js`. It attaches to any form carrying an ALTCHA widget and, on
+submit, writes eight aggregates (durations, event counts, pointer distance,
+typing rhythm variance) into a hidden `gatecha_his_signals` field. `verify()`
+reads that field and forwards it as `his_signals`, so every one of the 14
+integrations is covered by the single central call rather than one change each.
+
+The response then carries `his_bot_score` (0 to 1, higher is more bot-like,
+the reverse of reCAPTCHA) and `his_bot_suspected`. The plugin fires
+`gatecha_his_result` with both, and only rejects the submission when the second
+setting is on.
+
+Two rules the collector's behaviour depends on, worth keeping in mind before
+changing anything here:
+
+- the aggregates must be forwarded whole or not at all. A missing
+  `time_to_first_ms` is scored server-side as "first interaction at 0 ms", one
+  of the automation penalties, so a partial payload invents evidence against
+  the visitor. `get_his_signals()` returns null unless all eight are numeric;
+- the collector is served by the instance, never bundled, so the aggregates
+  cannot drift from what the server that scores them expects. An instance older
+  than 0.6.0 answers 404 and verification carries on unchanged.
 
 ## CAPTCHA Flow
 

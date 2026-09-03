@@ -31,6 +31,8 @@ $gatecha_options = array(
 	'gatecha_fail_mode',
 	'gatecha_auto_verify',
 	'gatecha_hide_branding',
+	'gatecha_his_enabled',
+	'gatecha_his_block',
 );
 
 foreach ( $gatecha_options as $gatecha_option ) {
