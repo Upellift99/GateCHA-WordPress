@@ -2,9 +2,9 @@
 Contributors: gatecha
 Tags: captcha, gatecha, altcha, spam, proof-of-work
 Requires at least: 6.0
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,6 +20,7 @@ GateCHA CAPTCHA connects your WordPress site to your own [GateCHA](https://gatec
 * **Self-hosted** — Your challenges and verifications stay on your own server. No data goes to third parties.
 * **Proof-of-work** — Bots must solve a computational puzzle. No annoying image puzzles for humans.
 * **Centralized stats** — Track challenges issued, verified, and failed across all your sites from one dashboard.
+* **Interaction signals** — Optional second opinion on each submission, scored from counts and durations alone. Off by default.
 
 **Supported forms:**
 
@@ -72,6 +73,20 @@ The API key is used in the browser to fetch challenges, similar to how reCAPTCHA
 
 Only to your own GateCHA instance. No data is sent to any third-party service. See the External Services section below.
 
+= What are interaction signals? =
+
+Proof-of-work proves a browser did the work. It does not prove a human filled the form in, and a headless browser solving the challenge passes it exactly like a visitor does. Interaction signals describe how the form was filled: how long the page was open, whether the pointer moved and how far, how many scrolls, touches and keystrokes there were, and how irregular the typing rhythm was. Your GateCHA instance turns those eight numbers into a score between 0 and 1, where higher means more likely automated.
+
+Only aggregates leave the browser. Never what was typed, never where the pointer was, never an IP address. Turn it on under **Settings → GateCHA → Interaction Signals**.
+
+= Does enabling interaction signals block anyone? =
+
+Not by itself. Collection only records scores, which you can watch on your GateCHA dashboard under HIS Monitor. Rejecting flagged submissions is a second, separate setting.
+
+Turn that second one on only once you have watched your own traffic, because a false positive is invisible: the visitor cannot submit and will not tell you. To see the scores in your own logs first, hook the `gatecha_his_result` action:
+
+`add_action( 'gatecha_his_result', function ( $score, $suspected ) { error_log( "GateCHA HIS $score" ); }, 10, 2 );`
+
 = Can I use this with a custom form? =
 
 Yes, use the `[gatecha]` shortcode to place the widget anywhere. Then verify the `altcha` POST field server-side.
@@ -99,6 +114,10 @@ This plugin connects to your self-hosted GateCHA instance for CAPTCHA challenge 
 1. **GET /api/v1/challenge** — Fetched by the user's browser to obtain a proof-of-work challenge.
 2. **POST /api/v1/verify** — Called from your WordPress server to verify the solved challenge.
 
+One more request happens only when **Collect Interaction Signals** is enabled, which it is not by default:
+
+3. **GET /api/public/his.js** — The interaction-signal collector, loaded by the user's browser from the same instance. It measures aggregates on the pages that carry a CAPTCHA (durations, event counts, total pointer distance, typing rhythm variance) and hands them to your WordPress server with the form, which forwards them to /api/v1/verify. It reads no field values, no pointer coordinates and no key contents.
+
 No data is sent to any third-party service. All communication is between your WordPress installation and your own GateCHA instance at the URL you configure in Settings → GateCHA.
 
 * GateCHA source code: [https://github.com/Upellift99/GateCHA](https://github.com/Upellift99/GateCHA)
@@ -120,6 +139,12 @@ This is the unmodified production build distributed on npm as the [`altcha`](htt
 
 == Changelog ==
 
+= 1.1.0 =
+* Optional interaction signals (HIS), off by default: the collector is loaded from your own GateCHA instance and its aggregates are forwarded to /api/v1/verify on every protected form.
+* Optional rejection of submissions GateCHA flags as automated, a separate setting from collection.
+* New `gatecha_his_result` action, fired with the score and the flag on every verification that carried signals, for logging your own traffic before deciding to block on it.
+* Requires GateCHA 0.7.0 or later for these two settings. Older instances are unaffected and keep working as before.
+
 = 1.0.0 =
 * Initial release.
 * WordPress login, registration, password reset, and comments integration.
@@ -128,6 +153,9 @@ This is the unmodified production build distributed on npm as the [`altcha`](htt
 * `[gatecha]` shortcode for custom form placement.
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+Adds optional interaction signals for spam that solves the proof-of-work. Nothing changes until you enable it under Settings → GateCHA.
 
 = 1.0.0 =
 Initial release.

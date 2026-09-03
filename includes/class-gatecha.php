@@ -45,6 +45,33 @@ class GateCHA {
 	public static $option_fail_mode   = 'gatecha_fail_mode';
 	public static $option_auto_verify = 'gatecha_auto_verify';
 	public static $option_hide_branding = 'gatecha_hide_branding';
+	public static $option_his_enabled   = 'gatecha_his_enabled';
+	public static $option_his_block     = 'gatecha_his_block';
+
+	/**
+	 * Form field the interaction collector writes its aggregates into.
+	 *
+	 * Fixed by the collector served at /api/public/his.js, so it is a constant
+	 * here rather than a setting: changing it on one side only would silently
+	 * stop the signals from ever reaching /verify.
+	 */
+	const HIS_FIELD = 'gatecha_his_signals';
+
+	/**
+	 * The eight aggregates the collector emits, and the type each is cast to.
+	 *
+	 * @var array<string, string>
+	 */
+	private static $his_signal_fields = array(
+		'duration_ms'           => 'int',
+		'time_to_first_ms'      => 'int',
+		'pointer_events'        => 'int',
+		'pointer_distance'      => 'float',
+		'scrolls'               => 'int',
+		'touches'               => 'int',
+		'keydowns'              => 'int',
+		'key_interval_stdev_ms' => 'float',
+	);
 
 	// Integration option names.
 	public static $option_wp_login          = 'gatecha_wp_login';
@@ -142,6 +169,27 @@ class GateCHA {
 		return in_array( $mode, array( 'open', 'closed' ), true ) ? $mode : 'closed';
 	}
 
+	/**
+	 * Whether interaction signals are collected and forwarded to /verify.
+	 *
+	 * @return bool
+	 */
+	public function is_his_enabled() {
+		return $this->is_configured() && (bool) get_option( self::$option_his_enabled, 0 );
+	}
+
+	/**
+	 * Whether a submission flagged as automated is rejected.
+	 *
+	 * Never true on its own: with collection off no score comes back, so there
+	 * is nothing to block on.
+	 *
+	 * @return bool
+	 */
+	public function is_his_blocking() {
+		return $this->is_his_enabled() && (bool) get_option( self::$option_his_block, 0 );
+	}
+
 	/*------------------------------------------------------------------
 	 * Integration toggles
 	 *-----------------------------------------------------------------*/
@@ -219,6 +267,61 @@ class GateCHA {
 		return apply_filters( 'gatecha_challenge_url', $challenge_url );
 	}
 
+	/**
+	 * Build the URL of the interaction-signal collector.
+	 *
+	 * Served by the GateCHA instance rather than bundled with the plugin, so
+	 * the aggregates always match what the server that scores them expects.
+	 *
+	 * @return string
+	 */
+	public function get_his_script_url() {
+		return apply_filters( 'gatecha_his_script_url', $this->get_url() . '/api/public/his.js' );
+	}
+
+	/*------------------------------------------------------------------
+	 * Interaction signals
+	 *-----------------------------------------------------------------*/
+
+	/**
+	 * Read the interaction signals the collector wrote into the submitted form.
+	 *
+	 * Returns null unless the field holds a JSON object carrying all eight
+	 * aggregates as numbers. Forwarding a partial object would be worse than
+	 * forwarding nothing: a missing `time_to_first_ms` reads server-side as
+	 * "first interaction at 0 ms", which is one of the automation penalties, so
+	 * a truncated payload would invent evidence against the visitor.
+	 *
+	 * @return array|null Sanitized aggregates, or null when there is nothing to send.
+	 */
+	public function get_his_signals() {
+		if ( ! $this->is_his_enabled() ) {
+			return null;
+		}
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Public form submission. The signals are advisory metrics scored by GateCHA; no privileged or data-modifying action is performed on this read.
+		if ( ! isset( $_POST[ self::HIS_FIELD ] ) ) {
+			return null;
+		}
+
+		$raw = sanitize_text_field( wp_unslash( $_POST[ self::HIS_FIELD ] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Public form submission. The signals are advisory metrics scored by GateCHA; no privileged or data-modifying action is performed on this read.
+
+		$decoded = json_decode( $raw, true );
+		if ( ! is_array( $decoded ) ) {
+			return null;
+		}
+
+		$signals = array();
+		foreach ( self::$his_signal_fields as $field => $type ) {
+			if ( ! isset( $decoded[ $field ] ) || ! is_numeric( $decoded[ $field ] ) ) {
+				return null;
+			}
+			$signals[ $field ] = ( 'int' === $type ) ? (int) $decoded[ $field ] : (float) $decoded[ $field ];
+		}
+
+		return $signals;
+	}
+
 	/*------------------------------------------------------------------
 	 * Server-side verification
 	 *-----------------------------------------------------------------*/
@@ -244,10 +347,17 @@ class GateCHA {
 		$url     = $this->get_url();
 		$api_key = $this->get_api_key();
 
+		$request_body = array( 'payload' => $payload );
+
+		$signals = $this->get_his_signals();
+		if ( null !== $signals ) {
+			$request_body['his_signals'] = $signals;
+		}
+
 		$response = wp_remote_post(
 			$url . '/api/v1/verify',
 			array(
-				'body'    => wp_json_encode( array( 'payload' => $payload ) ),
+				'body'    => wp_json_encode( $request_body ),
 				'headers' => array(
 					'Authorization' => 'Bearer ' . $api_key,
 					'Content-Type'  => 'application/json',
@@ -268,6 +378,7 @@ class GateCHA {
 		if ( 200 === $status ) {
 			$json   = json_decode( $body, true );
 			$result = isset( $json['ok'] ) && true === $json['ok'];
+			$result = $this->apply_his_outcome( $json, $result );
 			do_action( 'gatecha_verify_result', $result );
 			return $result;
 		}
@@ -275,6 +386,47 @@ class GateCHA {
 		return $this->handle_server_error(
 			sprintf( 'HTTP %d — %s', $status, wp_remote_retrieve_response_message( $response ) )
 		);
+	}
+
+	/**
+	 * Apply the interaction score carried by a /verify response.
+	 *
+	 * Fires `gatecha_his_result` so a site can log the score without acting on
+	 * it, which is the cheapest way to see how your own traffic distributes
+	 * before deciding to block anything. Then, and only when blocking is
+	 * switched on, turns a suspected submission into a failed verification.
+	 *
+	 * Both fields are absent from the response when the request carried no
+	 * signals, and absent is not a score of zero: a visitor whose collector
+	 * never ran is not thereby a bot. A PoW failure is left as it is; it has
+	 * already failed for a better reason.
+	 *
+	 * @param mixed $json   Decoded /verify response.
+	 * @param bool  $result Verification result so far.
+	 * @return bool Result after the interaction score is taken into account.
+	 */
+	private function apply_his_outcome( $json, $result ) {
+		if ( ! is_array( $json ) || ! isset( $json['his_bot_score'] ) ) {
+			return $result;
+		}
+
+		$score     = (float) $json['his_bot_score'];
+		$suspected = ! empty( $json['his_bot_suspected'] );
+
+		/**
+		 * Fires once per verification that carried interaction signals.
+		 *
+		 * @param float $score     Automation probability in [0,1]. Higher is more bot-like,
+		 *                         which is the reverse of the reCAPTCHA convention.
+		 * @param bool  $suspected Whether GateCHA judged the score past its own threshold.
+		 */
+		do_action( 'gatecha_his_result', $score, $suspected );
+
+		if ( $result && $suspected && $this->is_his_blocking() ) {
+			return false;
+		}
+
+		return $result;
 	}
 
 	/**
@@ -348,6 +500,7 @@ class GateCHA {
 
 		gatecha_enqueue_scripts();
 		gatecha_enqueue_styles();
+		gatecha_enqueue_his();
 
 		$auto_verify    = (bool) get_option( self::$option_auto_verify, 1 );
 		$hide_branding  = (bool) get_option( self::$option_hide_branding, 0 );
@@ -427,6 +580,34 @@ function gatecha_enqueue_scripts() {
 		'gatecha-script',
 		GateCHA::$wp_script_src,
 		array( 'gatecha-widget' ),
+		GATECHA_VERSION,
+		true
+	);
+}
+
+/**
+ * Enqueue the interaction-signal collector, when the setting is on.
+ *
+ * The script attaches to every form on the page that carries an ALTCHA widget
+ * and, on submit, writes its aggregates into a hidden field the plugin then
+ * forwards to /verify. Forms without a widget are left alone.
+ *
+ * It is served by the configured GateCHA instance, the same host the widget
+ * already fetches its challenge from, so no new party is involved. Instances
+ * older than 0.6.0 answer 404 for it, which costs nothing: no field is written
+ * and verification proceeds exactly as it did before.
+ */
+function gatecha_enqueue_his() {
+	$plugin = GateCHA::$instance;
+
+	if ( ! $plugin instanceof GateCHA || ! $plugin->is_his_enabled() ) {
+		return;
+	}
+
+	wp_enqueue_script(
+		'gatecha-his',
+		$plugin->get_his_script_url(),
+		array(),
 		GATECHA_VERSION,
 		true
 	);

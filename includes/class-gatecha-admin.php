@@ -140,6 +140,55 @@ add_action( 'admin_init', function () {
 	);
 
 	/*--------------------------------------------------------------
+	 * Interaction signals section
+	 *-------------------------------------------------------------*/
+	add_settings_section(
+		'gatecha_section_his',
+		__( 'Interaction Signals', 'gatecha-captcha' ),
+		function () {
+			echo '<p>' . esc_html__( 'Proof-of-work proves a browser did the work. It does not prove a human filled the form in. Interaction signals add a second opinion: how the form was filled, as counts and durations only. Never what was typed, never pointer coordinates, never an IP address.', 'gatecha-captcha' ) . '</p>';
+			echo '<p>' . esc_html__( 'Requires GateCHA 0.7.0 or later. Scores show up on your dashboard under HIS Monitor.', 'gatecha-captcha' ) . '</p>';
+		},
+		'gatecha_admin'
+	);
+
+	register_setting( 'gatecha_options', GateCHA::$option_his_enabled, array(
+		'type'              => 'integer',
+		'sanitize_callback' => 'absint',
+		'default'           => 0,
+	) );
+
+	add_settings_field(
+		GateCHA::$option_his_enabled,
+		__( 'Collect Interaction Signals', 'gatecha-captcha' ),
+		'gatecha_settings_checkbox_callback',
+		'gatecha_admin',
+		'gatecha_section_his',
+		array(
+			'name' => GateCHA::$option_his_enabled,
+			'hint' => __( 'Load the collector from your GateCHA instance and send the aggregates along with each verification. On its own this changes nothing about who gets through: scores are recorded, never enforced.', 'gatecha-captcha' ),
+		)
+	);
+
+	register_setting( 'gatecha_options', GateCHA::$option_his_block, array(
+		'type'              => 'integer',
+		'sanitize_callback' => 'absint',
+		'default'           => 0,
+	) );
+
+	add_settings_field(
+		GateCHA::$option_his_block,
+		__( 'Reject Suspected Automation', 'gatecha-captcha' ),
+		'gatecha_settings_checkbox_callback',
+		'gatecha_admin',
+		'gatecha_section_his',
+		array(
+			'name' => GateCHA::$option_his_block,
+			'hint' => __( 'Fail verification when GateCHA flags a submission as automated. Needs the setting above. Turn it on once you have watched your own scores for a few days: a false positive here is silent, the visitor simply cannot submit and never tells you.', 'gatecha-captcha' ),
+		)
+	);
+
+	/*--------------------------------------------------------------
 	 * WordPress section
 	 *-------------------------------------------------------------*/
 	add_settings_section(
