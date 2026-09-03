@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: GateCHA CAPTCHA 1.0.0\n"
+"Project-Id-Version: GateCHA CAPTCHA 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/GateCHA-WordPress\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-19T19:14:59+00:00\n"
+"POT-Creation-Date: 2026-09-03T09:58:20+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: gatecha-captcha\n"
@@ -17,7 +17,7 @@ msgstr ""
 #. Plugin Name of the plugin
 #: gatecha-captcha.php
 #: includes/class-gatecha-admin.php:17
-#: includes/class-gatecha-admin.php:386
+#: includes/class-gatecha-admin.php:435
 msgid "GateCHA CAPTCHA"
 msgstr ""
 
@@ -44,7 +44,7 @@ msgid "https://gatecha.org"
 msgstr ""
 
 #: gatecha-captcha.php:83
-#: includes/class-gatecha-admin.php:397
+#: includes/class-gatecha-admin.php:446
 msgid "Settings"
 msgstr ""
 
@@ -105,129 +105,157 @@ msgid "Hide the ALTCHA logo and \"Protected by ALTCHA\" footer. Keeping branding
 msgstr ""
 
 #: includes/class-gatecha-admin.php:147
-msgid "WordPress"
+msgid "Interaction Signals"
 msgstr ""
 
 #: includes/class-gatecha-admin.php:149
+msgid "Proof-of-work proves a browser did the work. It does not prove a human filled the form in. Interaction signals add a second opinion: how the form was filled, as counts and durations only. Never what was typed, never pointer coordinates, never an IP address."
+msgstr ""
+
+#: includes/class-gatecha-admin.php:150
+msgid "Requires GateCHA 0.7.0 or later. Scores show up on your dashboard under HIS Monitor."
+msgstr ""
+
+#: includes/class-gatecha-admin.php:163
+msgid "Collect Interaction Signals"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:169
+msgid "Load the collector from your GateCHA instance and send the aggregates along with each verification. On its own this changes nothing about who gets through: scores are recorded, never enforced."
+msgstr ""
+
+#: includes/class-gatecha-admin.php:181
+msgid "Reject Suspected Automation"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:187
+msgid "Fail verification when GateCHA flags a submission as automated. Needs the setting above. Turn it on once you have watched your own scores for a few days: a false positive here is silent, the visitor simply cannot submit and never tells you."
+msgstr ""
+
+#: includes/class-gatecha-admin.php:196
+msgid "WordPress"
+msgstr ""
+
+#: includes/class-gatecha-admin.php:198
 msgid "Enable CAPTCHA on built-in WordPress forms."
 msgstr ""
 
-#: includes/class-gatecha-admin.php:155
-#: includes/class-gatecha-admin.php:195
+#: includes/class-gatecha-admin.php:204
+#: includes/class-gatecha-admin.php:244
 msgid "Login"
 msgstr ""
 
-#: includes/class-gatecha-admin.php:156
-#: includes/class-gatecha-admin.php:196
+#: includes/class-gatecha-admin.php:205
+#: includes/class-gatecha-admin.php:245
 msgid "Registration"
 msgstr ""
 
-#: includes/class-gatecha-admin.php:157
-#: includes/class-gatecha-admin.php:197
+#: includes/class-gatecha-admin.php:206
+#: includes/class-gatecha-admin.php:246
 msgid "Password Reset"
 msgstr ""
 
-#: includes/class-gatecha-admin.php:158
+#: includes/class-gatecha-admin.php:207
 msgid "Comments"
 msgstr ""
 
-#: includes/class-gatecha-admin.php:185
+#: includes/class-gatecha-admin.php:234
 msgid "WooCommerce"
 msgstr ""
 
-#: includes/class-gatecha-admin.php:188
+#: includes/class-gatecha-admin.php:237
 msgid "WooCommerce is not active."
 msgstr ""
 
-#: includes/class-gatecha-admin.php:225
+#: includes/class-gatecha-admin.php:274
 msgid "Integrations"
 msgstr ""
 
-#: includes/class-gatecha-admin.php:227
+#: includes/class-gatecha-admin.php:276
 msgid "Enable CAPTCHA on third-party form plugins."
 msgstr ""
 
-#: includes/class-gatecha-admin.php:234
+#: includes/class-gatecha-admin.php:283
 msgid "Contact Form 7"
 msgstr ""
 
-#: includes/class-gatecha-admin.php:238
+#: includes/class-gatecha-admin.php:287
 msgid "WPForms"
 msgstr ""
 
-#: includes/class-gatecha-admin.php:242
+#: includes/class-gatecha-admin.php:291
 msgid "Gravity Forms"
 msgstr ""
 
-#: includes/class-gatecha-admin.php:246
+#: includes/class-gatecha-admin.php:295
 msgid "Elementor Pro Forms"
 msgstr ""
 
-#: includes/class-gatecha-admin.php:250
+#: includes/class-gatecha-admin.php:299
 msgid "Forminator"
 msgstr ""
 
-#: includes/class-gatecha-admin.php:254
+#: includes/class-gatecha-admin.php:303
 msgid "Formidable Forms"
 msgstr ""
 
-#: includes/class-gatecha-admin.php:258
+#: includes/class-gatecha-admin.php:307
 msgid "HTML Forms"
 msgstr ""
 
-#: includes/class-gatecha-admin.php:281
+#: includes/class-gatecha-admin.php:330
 msgid "Plugin not active."
 msgstr ""
 
-#: includes/class-gatecha-admin.php:357
+#: includes/class-gatecha-admin.php:406
 msgid "Enable"
 msgstr ""
 
-#: includes/class-gatecha-admin.php:381
+#: includes/class-gatecha-admin.php:430
 msgid "fail open (submissions allowed)"
 msgstr ""
 
-#: includes/class-gatecha-admin.php:382
+#: includes/class-gatecha-admin.php:431
 msgid "fail closed (submissions blocked)"
 msgstr ""
 
 #. translators: 1: error detail, 2: human-readable time ago, 3: current failure mode
-#: includes/class-gatecha-admin.php:390
+#: includes/class-gatecha-admin.php:439
 #, php-format
 msgid "Server unreachable (%1$s). Last error %2$s ago. Current mode: %3$s."
 msgstr ""
 
 #. translators: %s: plugin version number
-#: includes/class-gatecha-admin.php:432
+#: includes/class-gatecha-admin.php:481
 #, php-format
 msgid "GateCHA CAPTCHA for WordPress — v%s"
 msgstr ""
 
-#: includes/class-gatecha.php:325
+#: includes/class-gatecha.php:477
 msgid "Verification failed. Try again later."
 msgstr ""
 
-#: includes/class-gatecha.php:326
+#: includes/class-gatecha.php:478
 msgid "Protected by <a href=\"https://altcha.org\" target=\"_blank\">ALTCHA</a>"
 msgstr ""
 
-#: includes/class-gatecha.php:327
+#: includes/class-gatecha.php:479
 msgid "I'm not a robot"
 msgstr ""
 
-#: includes/class-gatecha.php:328
+#: includes/class-gatecha.php:480
 msgid "Verified"
 msgstr ""
 
-#: includes/class-gatecha.php:329
+#: includes/class-gatecha.php:481
 msgid "Verifying..."
 msgstr ""
 
-#: includes/class-gatecha.php:330
+#: includes/class-gatecha.php:482
 msgid "Verifying... please wait."
 msgstr ""
 
-#: includes/class-gatecha.php:394
+#: includes/class-gatecha.php:547
 msgid "This form requires JavaScript."
 msgstr ""
 
