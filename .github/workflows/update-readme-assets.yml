@@ -1,12 +1,20 @@
 name: Update readme & assets on WordPress.org
 
+# Manual only, deliberately.
+#
+# The 10up action refuses to publish when anything other than readme.txt and the
+# assets differs between this repo and SVN trunk, and it is right to: pushing a
+# readme whose Stable tag names a version trunk does not contain would break the
+# plugin page. Since main carries the next release's code from the moment a
+# feature merges, a push trigger on readme.txt fails for the whole window
+# between two releases. It did on #7, and twice in June for the same reason.
+#
+# The listing is refreshed by release.yml on a `v*` tag, which deploys trunk and
+# the tag together. Run this one by hand for a listing-only change (a typo, a new
+# banner) while trunk and main still agree, which in practice means just after a
+# release.
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'readme.txt'
-      - '.wordpress-org/**'
 
 # Serialize with release.yml: both touch the same WordPress.org SVN repo. Shared
 # group name => if a release deploy is running, this asset update queues behind it.
