@@ -107,6 +107,8 @@ The plugin will accept the token as a valid verification without contacting the 
 
 1. The GateCHA server dashboard — challenges, verifications and failures are tracked centrally across all your sites and API keys.
 
+2. One API key per site, each with its own difficulty, challenge TTL and allowed domains, so a single GateCHA instance serves every site you run.
+
 == External Services ==
 
 This plugin connects to your self-hosted GateCHA instance for CAPTCHA challenge generation and verification. Two API calls are made:
