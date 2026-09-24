@@ -35,6 +35,18 @@ require_once GATECHA_PLUGIN_DIR . 'includes/class-gatecha.php';
 GateCHA::set_asset_urls( GATECHA_PLUGIN_URL );
 
 /*----------------------------------------------------------------------
+ * Translations
+ *
+ * WordPress only looks in wp-content/languages/ on its own. Registering the
+ * bundled languages/ directory makes it the fallback for locales that have no
+ * language pack from translate.wordpress.org yet; a pack, when one exists,
+ * still takes precedence.
+ *---------------------------------------------------------------------*/
+add_action( 'init', function () {
+	load_plugin_textdomain( 'gatecha-captcha', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+} );
+
+/*----------------------------------------------------------------------
  * Load admin settings (admin only)
  *---------------------------------------------------------------------*/
 if ( is_admin() ) {
