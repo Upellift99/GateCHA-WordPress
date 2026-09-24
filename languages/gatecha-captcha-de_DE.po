@@ -1,0 +1,337 @@
+# German translation of GateCHA CAPTCHA.
+# Copyright (C) 2026 GateCHA
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: GateCHA CAPTCHA 1.2.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/GateCHA-WordPress\n"
+"Last-Translator: GateCHA\n"
+"Language-Team: German\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-09-03T09:59:15+00:00\n"
+"PO-Revision-Date: 2026-09-24 00:00+0000\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: gatecha-captcha\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. Plugin Name of the plugin
+#: gatecha-captcha.php
+#: includes/class-gatecha-admin.php:17
+#: includes/class-gatecha-admin.php:435
+msgid "GateCHA CAPTCHA"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: gatecha-captcha.php
+msgid "https://gatecha.org/wordpress"
+msgstr ""
+
+#. Description of the plugin
+#: gatecha-captcha.php
+msgid "Self-hosted ALTCHA proof-of-work CAPTCHA via GateCHA. Protects WordPress forms without cookies, fingerprinting, or third-party services."
+msgstr "Selbst gehostetes ALTCHA-Proof-of-Work-CAPTCHA über GateCHA. Schützt WordPress-Formulare ohne Cookies, Fingerprinting oder Drittanbieterdienste."
+
+#. Author of the plugin
+#: gatecha-captcha.php
+#: includes/class-gatecha-admin.php:18
+#: includes/integrations/elementor/field.php:36
+msgid "GateCHA"
+msgstr ""
+
+#. Author URI of the plugin
+#: gatecha-captcha.php
+msgid "https://gatecha.org"
+msgstr ""
+
+#: gatecha-captcha.php:83
+#: includes/class-gatecha-admin.php:446
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: includes/class-gatecha-admin.php:35
+msgid "General Settings"
+msgstr "Allgemeine Einstellungen"
+
+#: includes/class-gatecha-admin.php:37
+msgid "Enter the URL of your GateCHA instance and the API key."
+msgstr "Gib die URL deiner GateCHA-Instanz und den API-Schlüssel ein."
+
+#: includes/class-gatecha-admin.php:52
+msgid "GateCHA URL"
+msgstr "GateCHA-URL"
+
+#: includes/class-gatecha-admin.php:59
+msgid "Example: https://gatecha.example.com"
+msgstr "Beispiel: https://gatecha.example.com"
+
+#: includes/class-gatecha-admin.php:71
+msgid "API Key"
+msgstr "API-Schlüssel"
+
+#: includes/class-gatecha-admin.php:78
+msgid "Your GateCHA API key (starts with gk_)."
+msgstr "Dein GateCHA-API-Schlüssel (beginnt mit gk_)."
+
+#: includes/class-gatecha-admin.php:92
+msgid "Failure Mode"
+msgstr "Verhalten bei Ausfall"
+
+#: includes/class-gatecha-admin.php:99
+msgid "Fail closed — block submissions when server is unreachable"
+msgstr "Geschlossen — Absendungen blockieren, wenn der Server nicht erreichbar ist"
+
+#: includes/class-gatecha-admin.php:100
+msgid "Fail open — allow submissions when server is unreachable"
+msgstr "Offen — Absendungen zulassen, wenn der Server nicht erreichbar ist"
+
+#: includes/class-gatecha-admin.php:102
+msgid "Determines how forms behave if the GateCHA server cannot be reached. \"Fail closed\" is safer but may block legitimate users during an outage."
+msgstr "Legt fest, wie sich Formulare verhalten, wenn der GateCHA-Server nicht erreichbar ist. „Geschlossen“ ist sicherer, kann bei einem Ausfall aber auch echte Besucher blockieren."
+
+#: includes/class-gatecha-admin.php:114
+msgid "Auto Verify"
+msgstr "Automatisch verifizieren"
+
+#: includes/class-gatecha-admin.php:120
+msgid "Automatically start verification when the user focuses the form. When disabled, the user must click the checkbox manually."
+msgstr "Startet die Verifizierung automatisch, sobald das Formular den Fokus erhält. Ist die Option deaktiviert, muss das Kontrollkästchen von Hand angeklickt werden."
+
+#: includes/class-gatecha-admin.php:132
+msgid "Hide Branding"
+msgstr "Branding ausblenden"
+
+#: includes/class-gatecha-admin.php:138
+msgid "Hide the ALTCHA logo and \"Protected by ALTCHA\" footer. Keeping branding visible is recommended."
+msgstr "Blendet das ALTCHA-Logo und die Fußzeile „Protected by ALTCHA“ aus. Es wird empfohlen, das Branding sichtbar zu lassen."
+
+#: includes/class-gatecha-admin.php:147
+msgid "Interaction Signals"
+msgstr "Interaktionssignale"
+
+#: includes/class-gatecha-admin.php:149
+msgid "Proof-of-work proves a browser did the work. It does not prove a human filled the form in. Interaction signals add a second opinion: how the form was filled, as counts and durations only. Never what was typed, never pointer coordinates, never an IP address."
+msgstr "Proof-of-Work beweist, dass ein Browser die Arbeit erledigt hat, nicht aber, dass ein Mensch das Formular ausgefüllt hat. Interaktionssignale liefern eine zweite Einschätzung: wie das Formular ausgefüllt wurde, nur als Zähler und Dauern. Nie das Eingegebene, nie Zeigerkoordinaten, nie eine IP-Adresse."
+
+#: includes/class-gatecha-admin.php:150
+msgid "Requires GateCHA 0.7.0 or later. Scores show up on your dashboard under HIS Monitor."
+msgstr "Erfordert GateCHA 0.7.0 oder neuer. Die Bewertungen erscheinen in deinem Dashboard unter „HIS Monitor“."
+
+#: includes/class-gatecha-admin.php:163
+msgid "Collect Interaction Signals"
+msgstr "Interaktionssignale erfassen"
+
+#: includes/class-gatecha-admin.php:169
+msgid "Load the collector from your GateCHA instance and send the aggregates along with each verification. On its own this changes nothing about who gets through: scores are recorded, never enforced."
+msgstr "Lädt den Collector von deiner GateCHA-Instanz und sendet die aggregierten Werte mit jeder Verifizierung. Für sich allein ändert das nichts daran, wer durchkommt: Die Bewertungen werden aufgezeichnet, aber nie durchgesetzt."
+
+#: includes/class-gatecha-admin.php:181
+msgid "Reject Suspected Automation"
+msgstr "Vermutete Automatisierung ablehnen"
+
+#: includes/class-gatecha-admin.php:187
+msgid "Fail verification when GateCHA flags a submission as automated. Needs the setting above. Turn it on once you have watched your own scores for a few days: a false positive here is silent, the visitor simply cannot submit and never tells you."
+msgstr "Lässt die Verifizierung fehlschlagen, wenn GateCHA eine Absendung als automatisiert einstuft. Erfordert die Einstellung oben. Aktiviere sie erst, nachdem du deine eigenen Bewertungen einige Tage beobachtet hast: Ein Fehlalarm bleibt hier unbemerkt, der Besucher kann das Formular einfach nicht absenden und sagt es dir nie."
+
+#: includes/class-gatecha-admin.php:196
+msgid "WordPress"
+msgstr "WordPress"
+
+#: includes/class-gatecha-admin.php:198
+msgid "Enable CAPTCHA on built-in WordPress forms."
+msgstr "CAPTCHA für die integrierten WordPress-Formulare aktivieren."
+
+#: includes/class-gatecha-admin.php:204
+#: includes/class-gatecha-admin.php:244
+msgid "Login"
+msgstr "Anmeldung"
+
+#: includes/class-gatecha-admin.php:205
+#: includes/class-gatecha-admin.php:245
+msgid "Registration"
+msgstr "Registrierung"
+
+#: includes/class-gatecha-admin.php:206
+#: includes/class-gatecha-admin.php:246
+msgid "Password Reset"
+msgstr "Passwort zurücksetzen"
+
+#: includes/class-gatecha-admin.php:207
+msgid "Comments"
+msgstr "Kommentare"
+
+#: includes/class-gatecha-admin.php:234
+msgid "WooCommerce"
+msgstr "WooCommerce"
+
+#: includes/class-gatecha-admin.php:237
+msgid "WooCommerce is not active."
+msgstr "WooCommerce ist nicht aktiv."
+
+#: includes/class-gatecha-admin.php:274
+msgid "Integrations"
+msgstr "Integrationen"
+
+#: includes/class-gatecha-admin.php:276
+msgid "Enable CAPTCHA on third-party form plugins."
+msgstr "CAPTCHA für Formular-Plugins von Drittanbietern aktivieren."
+
+#: includes/class-gatecha-admin.php:283
+msgid "Contact Form 7"
+msgstr "Contact Form 7"
+
+#: includes/class-gatecha-admin.php:287
+msgid "WPForms"
+msgstr "WPForms"
+
+#: includes/class-gatecha-admin.php:291
+msgid "Gravity Forms"
+msgstr "Gravity Forms"
+
+#: includes/class-gatecha-admin.php:295
+msgid "Elementor Pro Forms"
+msgstr "Elementor-Pro-Formulare"
+
+#: includes/class-gatecha-admin.php:299
+msgid "Forminator"
+msgstr "Forminator"
+
+#: includes/class-gatecha-admin.php:303
+msgid "Formidable Forms"
+msgstr "Formidable Forms"
+
+#: includes/class-gatecha-admin.php:307
+msgid "HTML Forms"
+msgstr "HTML Forms"
+
+#: includes/class-gatecha-admin.php:330
+msgid "Plugin not active."
+msgstr "Plugin nicht aktiv."
+
+#: includes/class-gatecha-admin.php:406
+msgid "Enable"
+msgstr "Aktivieren"
+
+#: includes/class-gatecha-admin.php:430
+msgid "fail open (submissions allowed)"
+msgstr "offen (Absendungen erlaubt)"
+
+#: includes/class-gatecha-admin.php:431
+msgid "fail closed (submissions blocked)"
+msgstr "geschlossen (Absendungen blockiert)"
+
+#. translators: 1: error detail, 2: human-readable time ago, 3: current failure mode
+#: includes/class-gatecha-admin.php:439
+#, php-format
+msgid "Server unreachable (%1$s). Last error %2$s ago. Current mode: %3$s."
+msgstr "Server nicht erreichbar (%1$s). Letzter Fehler vor %2$s. Aktueller Modus: %3$s."
+
+#. translators: %s: plugin version number
+#: includes/class-gatecha-admin.php:481
+#, php-format
+msgid "GateCHA CAPTCHA for WordPress — v%s"
+msgstr "GateCHA CAPTCHA für WordPress — v%s"
+
+#: includes/class-gatecha.php:478
+msgid "ALTCHA (official website)"
+msgstr "ALTCHA (offizielle Website)"
+
+#: includes/class-gatecha.php:479
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: includes/class-gatecha.php:480
+msgid "Enter code"
+msgstr "Code eingeben"
+
+#: includes/class-gatecha.php:481
+msgid "Enter code you hear. Press Space to play audio."
+msgstr "Gib den Code ein, den du hörst. Drücke die Leertaste, um die Audiodatei abzuspielen."
+
+#: includes/class-gatecha.php:482
+msgid "To proceed, please enter the code from the image below."
+msgstr "Um fortzufahren, gib bitte den Code aus dem Bild unten ein."
+
+#: includes/class-gatecha.php:483
+msgid "Verification failed. Try again later."
+msgstr "Verifizierung fehlgeschlagen. Versuche es später erneut."
+
+#: includes/class-gatecha.php:484
+msgid "Verification expired. Try again."
+msgstr "Verifizierung abgelaufen. Versuche es erneut."
+
+#: includes/class-gatecha.php:485
+msgid "Protected by <a href=\"https://altcha.org\" target=\"_blank\">ALTCHA</a>"
+msgstr "Geschützt durch <a href=\"https://altcha.org\" target=\"_blank\">ALTCHA</a>"
+
+#: includes/class-gatecha.php:486
+msgid "Get an audio challenge"
+msgstr "Audio-Aufgabe anfordern"
+
+#: includes/class-gatecha.php:487
+msgid "I'm not a robot"
+msgstr "Ich bin kein Roboter"
+
+#: includes/class-gatecha.php:488
+msgid "Loading..."
+msgstr "Wird geladen …"
+
+#: includes/class-gatecha.php:489
+msgid "Reload"
+msgstr "Neu laden"
+
+#: includes/class-gatecha.php:490
+msgid "Verification required!"
+msgstr "Verifizierung erforderlich!"
+
+#: includes/class-gatecha.php:491
+msgid "Verified"
+msgstr "Verifiziert"
+
+#: includes/class-gatecha.php:492
+msgid "Verify"
+msgstr "Verifizieren"
+
+#: includes/class-gatecha.php:493
+msgid "Verifying..."
+msgstr "Wird verifiziert …"
+
+#: includes/class-gatecha.php:494
+msgid "Verifying... please wait."
+msgstr "Wird verifiziert … bitte warten."
+
+#: includes/class-gatecha.php:581
+msgid "This form requires JavaScript."
+msgstr "Dieses Formular erfordert JavaScript."
+
+#: includes/integrations/elementor/field.php:68
+#: includes/integrations/formidable/GateCHAFieldType.php:58
+#: includes/integrations/forminator.php:49
+#: includes/integrations/gravityforms/field.php:86
+#: includes/integrations/html-forms.php:59
+#: includes/integrations/woocommerce-login.php:46
+#: includes/integrations/woocommerce-register.php:36
+#: includes/integrations/woocommerce-reset-password.php:41
+#: includes/integrations/wordpress-comments.php:50
+#: includes/integrations/wordpress-login.php:58
+#: includes/integrations/wordpress-register.php:40
+#: includes/integrations/wordpress-reset-password.php:40
+#: includes/integrations/wpforms.php:36
+msgid "CAPTCHA verification failed."
+msgstr "CAPTCHA-Verifizierung fehlgeschlagen."
+
+#: includes/integrations/gravityforms/field.php:64
+msgid "GateCHA CAPTCHA widget will appear here."
+msgstr "Das GateCHA-CAPTCHA-Widget wird hier angezeigt."
+
+#: includes/integrations/wordpress-comments.php:51
+msgid "Comment Submission Failure"
+msgstr "Fehler beim Absenden des Kommentars"
+
+#: includes/integrations/wordpress-login.php:57
+#: includes/integrations/wordpress-register.php:39
+#: includes/integrations/wordpress-reset-password.php:39
+msgid "Error"
+msgstr "Fehler"

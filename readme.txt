@@ -143,6 +143,7 @@ This is the unmodified production build distributed on npm as the [`altcha`](htt
 * Bundled ALTCHA widget updated from 2.2.4 to 3.2.2.
 * ALTCHA's own interaction signature is switched off explicitly, in line with the plugin's no-fingerprinting promise.
 * Widget translations now register into the widget's i18n store, and the language follows your site locale.
+* German and French translations bundled, used until a language pack from translate.wordpress.org replaces them. Previously the widget read "I'm not a robot" on every site, whatever its language.
 * No change to the proof-of-work itself, which is identical in both widget versions.
 
 = 1.1.0 =
