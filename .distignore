@@ -19,6 +19,7 @@
 /.distignore
 /.editorconfig
 /CLAUDE.md
+/PRODUCT.md
 
 # OS / editor cruft
 .DS_Store
