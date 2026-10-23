@@ -4,7 +4,7 @@ Tags: captcha, gatecha, altcha, spam, proof-of-work
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -141,6 +141,11 @@ This is the unmodified production build distributed on npm as the [`altcha`](htt
 
 == Changelog ==
 
+= 1.3.0 =
+* Clearer error messages for visitors. Instead of one "CAPTCHA verification failed." for everything, the plugin now says whether the "I'm not a robot" check was never completed, did not pass, or could not run because your GateCHA server is unreachable, so visitors know whether to tick the box, try again, or come back later. Translated in German and French.
+* Settings → GateCHA works with screen readers: every field now has a name ("GateCHA URL", "WooCommerce — Login: Enable" instead of eighteen identical "Enable" checkboxes), hints are read with their field, and the Failure Mode options are no longer cut off.
+* No change to how submissions are verified, and no setting to change.
+
 = 1.2.0 =
 * Bundled ALTCHA widget updated from 2.2.4 to 3.2.2.
 * ALTCHA's own interaction signature is switched off explicitly, in line with the plugin's no-fingerprinting promise.
@@ -162,6 +167,9 @@ This is the unmodified production build distributed on npm as the [`altcha`](htt
 * `[gatecha]` shortcode for custom form placement.
 
 == Upgrade Notice ==
+
+= 1.3.0 =
+Clearer error messages for your visitors and a settings page that works with screen readers. Nothing to reconfigure.
 
 = 1.2.0 =
 Updates the bundled ALTCHA widget to 3.2.2. Same proof-of-work, same settings; check your forms once after updating.
