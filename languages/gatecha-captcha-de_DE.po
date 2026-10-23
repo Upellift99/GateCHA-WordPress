@@ -335,3 +335,19 @@ msgstr "Fehler beim Absenden des Kommentars"
 #: includes/integrations/wordpress-reset-password.php:39
 msgid "Error"
 msgstr "Fehler"
+
+#. translators: %s: the CAPTCHA checkbox label, "I'm not a robot"
+#: includes/class-gatecha.php
+#, php-format
+msgid "Please complete the “%s” check, then submit again."
+msgstr "Schließe die Prüfung „%s“ ab und sende das Formular erneut."
+
+#: includes/class-gatecha.php
+msgid "The anti-spam check is temporarily unavailable. Please try again in a few minutes."
+msgstr "Die Anti-Spam-Prüfung ist vorübergehend nicht verfügbar. Versuche es in ein paar Minuten erneut."
+
+#. translators: %s: the CAPTCHA checkbox label, "I'm not a robot"
+#: includes/class-gatecha.php
+#, php-format
+msgid "The “%s” check did not pass. Please run it again, then submit."
+msgstr "Die Prüfung „%s“ war nicht erfolgreich. Starte sie erneut und sende das Formular dann ab."

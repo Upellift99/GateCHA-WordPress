@@ -332,3 +332,19 @@ msgstr ""
 #: includes/integrations/wordpress-reset-password.php:39
 msgid "Error"
 msgstr ""
+
+#. translators: %s: the CAPTCHA checkbox label, "I'm not a robot"
+#: includes/class-gatecha.php
+#, php-format
+msgid "Please complete the “%s” check, then submit again."
+msgstr ""
+
+#: includes/class-gatecha.php
+msgid "The anti-spam check is temporarily unavailable. Please try again in a few minutes."
+msgstr ""
+
+#. translators: %s: the CAPTCHA checkbox label, "I'm not a robot"
+#: includes/class-gatecha.php
+#, php-format
+msgid "The “%s” check did not pass. Please run it again, then submit."
+msgstr ""

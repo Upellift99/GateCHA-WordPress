@@ -55,6 +55,7 @@ add_action( 'admin_init', function () {
 		'gatecha_section_general',
 		array(
 			'name' => GateCHA::$option_url,
+			'label_for' => GateCHA::$option_url,
 			'type' => 'url',
 			'hint' => __( 'Example: https://gatecha.example.com', 'gatecha-captcha' ),
 		)
@@ -74,6 +75,7 @@ add_action( 'admin_init', function () {
 		'gatecha_section_general',
 		array(
 			'name' => GateCHA::$option_api_key,
+			'label_for' => GateCHA::$option_api_key,
 			'type' => 'text',
 			'hint' => __( 'Your GateCHA API key (starts with gk_).', 'gatecha-captcha' ),
 		)
@@ -95,6 +97,7 @@ add_action( 'admin_init', function () {
 		'gatecha_section_general',
 		array(
 			'name'    => GateCHA::$option_fail_mode,
+			'label_for' => GateCHA::$option_fail_mode,
 			'options' => array(
 				'closed' => __( 'Fail closed — block submissions when server is unreachable', 'gatecha-captcha' ),
 				'open'   => __( 'Fail open — allow submissions when server is unreachable', 'gatecha-captcha' ),
@@ -338,6 +341,61 @@ add_action( 'admin_init', function () {
  *---------------------------------------------------------------------*/
 
 /**
+ * Name the row a checkbox belongs to, for its accessible name.
+ *
+ * Every checkbox reads "Enable" on screen, and the row title beside it is not
+ * its label, so a screen reader announced eighteen identical "Enable" boxes.
+ * The title and section are read back from the Settings API registries, so no
+ * caller has to repeat them, and both strings are already translated.
+ *
+ * @param string $name Field ID.
+ * @return string e.g. "WooCommerce — Login", or the field title alone.
+ */
+function gatecha_settings_field_context( $name ) {
+	global $wp_settings_fields, $wp_settings_sections;
+
+	foreach ( (array) ( $wp_settings_fields['gatecha_admin'] ?? array() ) as $section_id => $fields ) {
+		if ( ! isset( $fields[ $name ] ) ) {
+			continue;
+		}
+		$title   = wp_strip_all_tags( $fields[ $name ]['title'] );
+		$section = $wp_settings_sections['gatecha_admin'][ $section_id ]['title'] ?? '';
+		// Only "Login", "Registration" and "Password Reset" repeat across the WordPress and
+		// WooCommerce sections; every other title is unique on its own.
+		if ( ! in_array( $section_id, array( 'gatecha_section_wordpress', 'gatecha_section_woocommerce' ), true ) || '' === $section ) {
+			return $title;
+		}
+		return $section . ' — ' . $title;
+	}
+
+	return '';
+}
+
+/**
+ * Print an aria-describedby attribute pointing at a field's hint.
+ *
+ * @param string $name Field ID.
+ * @param string $hint Hint text; nothing is printed without one.
+ */
+function gatecha_settings_describedby( $name, $hint ) {
+	if ( $hint ) {
+		echo 'aria-describedby="' . esc_attr( $name . '-description' ) . '"';
+	}
+}
+
+/**
+ * Print a field's hint, with the ID its control is described by.
+ *
+ * @param string $name Field ID.
+ * @param string $hint Hint text.
+ */
+function gatecha_settings_hint( $name, $hint ) {
+	if ( $hint ) {
+		echo '<p class="description" id="' . esc_attr( $name . '-description' ) . '">' . esc_html( $hint ) . '</p>';
+	}
+}
+
+/**
  * Render a text / URL / password input field.
  *
  * @param array $args Field arguments.
@@ -353,10 +411,9 @@ function gatecha_settings_field_callback( array $args ) {
 		   name="<?php echo esc_attr( $name ); ?>"
 		   id="<?php echo esc_attr( $name ); ?>"
 		   value="<?php echo esc_attr( $value ); ?>"
+		   <?php gatecha_settings_describedby( $name, $hint ); ?>
 		   autocomplete="off">
-	<?php if ( $hint ) : ?>
-		<p class="description"><?php echo esc_html( $hint ); ?></p>
-	<?php endif; ?>
+	<?php gatecha_settings_hint( $name, $hint ); ?>
 	<?php
 }
 
@@ -372,16 +429,16 @@ function gatecha_settings_select_callback( array $args ) {
 	$value   = (string) get_option( $name, '' );
 	?>
 	<select name="<?php echo esc_attr( $name ); ?>"
-			id="<?php echo esc_attr( $name ); ?>">
+			id="<?php echo esc_attr( $name ); ?>"
+			style="max-width: 100%;"
+			<?php gatecha_settings_describedby( $name, $hint ); ?>>
 		<?php foreach ( $options as $key => $label ) : ?>
 			<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $value, $key ); ?>>
 				<?php echo esc_html( $label ); ?>
 			</option>
 		<?php endforeach; ?>
 	</select>
-	<?php if ( $hint ) : ?>
-		<p class="description"><?php echo esc_html( $hint ); ?></p>
-	<?php endif; ?>
+	<?php gatecha_settings_hint( $name, $hint ); ?>
 	<?php
 }
 
@@ -401,13 +458,13 @@ function gatecha_settings_checkbox_callback( array $args ) {
 			   name="<?php echo esc_attr( $name ); ?>"
 			   id="<?php echo esc_attr( $name ); ?>"
 			   value="1"
+			   <?php gatecha_settings_describedby( $name, $hint ); ?>
 			   <?php checked( 1, $value ); ?>
 			   <?php disabled( $disabled ); ?>>
+		<span class="screen-reader-text"><?php echo esc_html( gatecha_settings_field_context( $name ) ); ?>: </span>
 		<?php esc_html_e( 'Enable', 'gatecha-captcha' ); ?>
 	</label>
-	<?php if ( $hint ) : ?>
-		<p class="description"><?php echo esc_html( $hint ); ?></p>
-	<?php endif; ?>
+	<?php gatecha_settings_hint( $name, $hint ); ?>
 	<?php
 }
 
@@ -474,7 +531,7 @@ function gatecha_options_page_html() {
 			?>
 		</form>
 
-		<p style="opacity: .6;">
+		<p class="description">
 			<?php
 			printf(
 				/* translators: %s: plugin version number */

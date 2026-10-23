@@ -65,7 +65,7 @@ class GateCHA_Elementor_Form_Field extends \ElementorPro\Modules\Forms\Fields\Fi
 			if ( false === $plugin->verify( $payload ) ) {
 				$ajax_handler->add_error(
 					$field['id'],
-					esc_html__( 'CAPTCHA verification failed.', 'gatecha-captcha' )
+					esc_html( GateCHA::$instance->error_message() )
 				);
 			}
 		}

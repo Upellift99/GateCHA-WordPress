@@ -40,6 +40,13 @@ class GateCHA {
 	}
 
 	// Option name constants.
+	/**
+	 * Why the last verify() call failed: 'missing', 'rejected' or 'unavailable'.
+	 *
+	 * @var string|null
+	 */
+	private $last_failure = null;
+
 	public static $option_url       = 'gatecha_url';
 	public static $option_api_key   = 'gatecha_api_key';
 	public static $option_fail_mode   = 'gatecha_fail_mode';
@@ -331,7 +338,10 @@ class GateCHA {
 	 * @return bool True if verification succeeded, false otherwise.
 	 */
 	public function verify( $payload ) {
+		$this->last_failure = null;
+
 		if ( empty( $payload ) ) {
+			$this->last_failure = 'missing';
 			do_action( 'gatecha_verify_result', false );
 			return false;
 		}
@@ -377,6 +387,9 @@ class GateCHA {
 			$json   = json_decode( $body, true );
 			$result = isset( $json['ok'] ) && true === $json['ok'];
 			$result = $this->apply_his_outcome( $json, $result );
+			if ( ! $result ) {
+				$this->last_failure = 'rejected';
+			}
 			do_action( 'gatecha_verify_result', $result );
 			return $result;
 		}
@@ -455,8 +468,38 @@ class GateCHA {
 			'mode'    => $fail_open ? 'open' : 'closed',
 		), HOUR_IN_SECONDS );
 
+		if ( ! $fail_open ) {
+			$this->last_failure = 'unavailable';
+		}
+
 		do_action( 'gatecha_verify_result', $fail_open );
 		return $fail_open;
+	}
+
+	/**
+	 * Visitor-facing message for the last failed verification.
+	 *
+	 * One "CAPTCHA verification failed." used to cover a box nobody ticked, a
+	 * rejected solution and a GateCHA server that is down, so the visitor could
+	 * not tell whether to retry now, tick the box, or come back later.
+	 *
+	 * @return string Translated, unescaped message.
+	 */
+	public function error_message() {
+		$label = __( "I'm not a robot", 'gatecha-captcha' );
+
+		switch ( $this->last_failure ) {
+			case 'missing':
+				/* translators: %s: the CAPTCHA checkbox label, "I'm not a robot" */
+				return sprintf( __( 'Please complete the “%s” check, then submit again.', 'gatecha-captcha' ), $label );
+			case 'unavailable':
+				return __( 'The anti-spam check is temporarily unavailable. Please try again in a few minutes.', 'gatecha-captcha' );
+			case 'rejected':
+				/* translators: %s: the CAPTCHA checkbox label, "I'm not a robot" */
+				return sprintf( __( 'The “%s” check did not pass. Please run it again, then submit.', 'gatecha-captcha' ), $label );
+			default:
+				return __( 'CAPTCHA verification failed.', 'gatecha-captcha' );
+		}
 	}
 
 	/*------------------------------------------------------------------
