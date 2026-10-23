@@ -33,7 +33,7 @@ add_action( 'woocommerce_register_post', function ( $username, $email, $errors )
 		if ( false === $plugin->verify( $payload ) ) {
 			$errors->add(
 				'gatecha_error',
-				esc_html__( 'CAPTCHA verification failed.', 'gatecha-captcha' )
+				esc_html( GateCHA::$instance->error_message() )
 			);
 		}
 	}

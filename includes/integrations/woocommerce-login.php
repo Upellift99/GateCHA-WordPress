@@ -43,7 +43,7 @@ add_filter( 'authenticate', function ( $user ) {
 		if ( false === $plugin->verify( $payload ) ) {
 			return new WP_Error(
 				'gatecha_error',
-				esc_html__( 'CAPTCHA verification failed.', 'gatecha-captcha' )
+				esc_html( GateCHA::$instance->error_message() )
 			);
 		}
 	}

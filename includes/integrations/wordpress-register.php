@@ -37,7 +37,7 @@ add_action( 'register_post', function ( $sanitized_user_login, $user_email, $err
 			$errors->add(
 				'gatecha_error',
 				'<strong>' . esc_html__( 'Error', 'gatecha-captcha' ) . '</strong>: '
-				. esc_html__( 'CAPTCHA verification failed.', 'gatecha-captcha' )
+				. esc_html( GateCHA::$instance->error_message() )
 			);
 		}
 	}

@@ -56,7 +56,7 @@ if ( gatecha_plugin_active( 'html-forms' ) ) :
 	 * @return string
 	 */
 	add_filter( 'hf_form_message_gatecha_invalid', function () {
-		return esc_html__( 'CAPTCHA verification failed.', 'gatecha-captcha' );
+		return esc_html( GateCHA::$instance->error_message() );
 	} );
 
 endif;

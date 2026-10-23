@@ -55,7 +55,7 @@ add_filter( 'authenticate', function ( $user, $username, $password ) {
 			return new WP_Error(
 				'gatecha_error',
 				'<strong>' . esc_html__( 'Error', 'gatecha-captcha' ) . '</strong>: '
-				. esc_html__( 'CAPTCHA verification failed.', 'gatecha-captcha' )
+				. esc_html( GateCHA::$instance->error_message() )
 			);
 		}
 	}

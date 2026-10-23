@@ -46,7 +46,7 @@ if ( gatecha_plugin_active( 'forminator' ) ) :
 			if ( false === $plugin->verify( $payload ) ) {
 				return array(
 					'can_submit' => false,
-					'error'      => esc_html__( 'CAPTCHA verification failed.', 'gatecha-captcha' ),
+					'error'      => esc_html( GateCHA::$instance->error_message() ),
 				);
 			}
 		}
