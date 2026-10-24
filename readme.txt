@@ -105,7 +105,7 @@ The plugin will accept the token as a valid verification without contacting the 
 
 == Screenshots ==
 
-1. The GateCHA server dashboard — challenges, verifications and failures are tracked centrally across all your sites and API keys.
+1. The GateCHA server dashboard leads with what needs attention: a key failing today is named with its numbers, above the day's verifications and every site's key grouped by status.
 
 2. One API key per site, each with its own difficulty, challenge TTL and allowed domains, so a single GateCHA instance serves every site you run.
 
