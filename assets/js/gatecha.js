@@ -8,6 +8,9 @@
  *      translations are now applied through the store.
  *   2. Prevent form submission until the ALTCHA widget has been verified, with a
  *      MutationObserver for dynamic content (Elementor popups, etc.).
+ *   3. In fail-open mode, release the form when the widget cannot reach GateCHA
+ *      (error state, or verification hanging). The server then confirms the
+ *      outage itself before accepting a submission without a solution.
  *
  * @package GateCHA_CAPTCHA
  */
@@ -76,6 +79,10 @@
 			return;
 		}
 
+		if ( window.gatechaI18n && window.gatechaI18n.failOpen && typeof MutationObserver !== 'undefined' ) {
+			watchForOutage( el );
+		}
+
 		// Block submission until the widget reports a verified state. The widget
 		// mounts asynchronously (ALTCHA v3 is an async ES module), so we look up
 		// its state and checkbox at submit time rather than at init time.
@@ -96,6 +103,73 @@
 			},
 			true
 		);
+	}
+
+	/* ------------------------------------------------------------------
+	 * 3. Fail-open: release the form when GateCHA is out of reach
+	 * ---------------------------------------------------------------- */
+
+	// How long "verifying" may last before it counts as a hang. Fetching a
+	// challenge and solving it takes well under a second on a normal device;
+	// a challenge request that never answers would otherwise block the form
+	// for good, since the widget's checkbox is required.
+	var HANG_MS = 15000;
+
+	/**
+	 * Replace the widget with a short note. Without the widget there is no
+	 * required checkbox to stop the form and no payload in it, which the
+	 * server reads as "check the instance, then fail open".
+	 *
+	 * @param {Element} el The altcha-widget element.
+	 */
+	function releaseForm( el ) {
+		if ( ! el.isConnected ) {
+			return;
+		}
+		var note = document.createElement( 'p' );
+		note.className = 'gatecha-unavailable';
+		note.setAttribute( 'role', 'status' );
+		note.textContent = ( window.gatechaI18n && window.gatechaI18n.unavailable ) || '';
+		el.replaceWith( note );
+	}
+
+	/**
+	 * Watch a widget's state and release its form on error or hang.
+	 *
+	 * @param {Element} el The altcha-widget element.
+	 */
+	function watchForOutage( el ) {
+		var hang = null;
+		var observer;
+
+		function check() {
+			var node = el.querySelector( '.altcha' );
+			var state = node && node.getAttribute( 'data-state' );
+			if ( 'error' === state ) {
+				observer.disconnect();
+				clearTimeout( hang );
+				releaseForm( el );
+				return;
+			}
+			if ( 'verifying' === state ) {
+				if ( ! hang ) {
+					hang = setTimeout( function () {
+						var now = el.querySelector( '.altcha' );
+						if ( now && 'verifying' === now.getAttribute( 'data-state' ) ) {
+							observer.disconnect();
+							releaseForm( el );
+						}
+					}, HANG_MS );
+				}
+			} else if ( hang ) {
+				clearTimeout( hang );
+				hang = null;
+			}
+		}
+
+		observer = new MutationObserver( check );
+		observer.observe( el, { subtree: true, childList: true, attributes: true, attributeFilter: [ 'data-state' ] } );
+		check();
 	}
 
 	function initWidgets() {

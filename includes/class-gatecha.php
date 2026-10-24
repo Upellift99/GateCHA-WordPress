@@ -351,6 +351,18 @@ class GateCHA {
 		$this->last_failure = null;
 
 		if ( empty( $payload ) ) {
+			// In fail-open mode a missing payload may mean the visitor's browser
+			// could not reach GateCHA (instance down, key disabled), in which
+			// case gatecha.js lets the form through without one. The browser's
+			// word is not taken for it: the instance is asked, and only when it
+			// really cannot serve this key does the submission fail open. A bot
+			// that skips the widget while the instance is up is still refused.
+			if ( 'open' === $this->get_fail_mode() && $this->is_configured() ) {
+				$outage = $this->get_outage();
+				if ( null !== $outage ) {
+					return $this->handle_server_error( $outage );
+				}
+			}
 			$this->last_failure = 'missing';
 			do_action( 'gatecha_verify_result', false );
 			return false;
@@ -484,6 +496,51 @@ class GateCHA {
 
 		do_action( 'gatecha_verify_result', $fail_open );
 		return $fail_open;
+	}
+
+	/**
+	 * Whether the instance can currently serve challenges for this key.
+	 *
+	 * Asks for a challenge, the very request that failed in the visitor's
+	 * browser, and caches the answer for a minute so a flood of payload-less
+	 * submissions costs one request a minute, not one each. A probe that gets
+	 * through counts one challenge on the instance's statistics.
+	 *
+	 * Any HTTP answer below 500 other than 401/403 means the instance is up and
+	 * serving this key (429 included: it is answering, just busy), so a missing
+	 * payload is the visitor's, not an outage.
+	 *
+	 * @return string|null Outage detail, or null when the instance serves the key.
+	 */
+	private function get_outage() {
+		$cached = get_transient( 'gatecha_outage_probe' );
+		if ( is_array( $cached ) ) {
+			return $cached['outage'];
+		}
+
+		$response = wp_remote_get(
+			$this->get_challengeurl(),
+			array(
+				'headers' => array(
+					'Accept'  => 'application/json',
+					'Referer' => home_url(),
+				),
+				'timeout' => 5,
+			)
+		);
+
+		$outage = null;
+		if ( is_wp_error( $response ) ) {
+			$outage = $response->get_error_message();
+		} else {
+			$status = (int) wp_remote_retrieve_response_code( $response );
+			if ( 401 === $status || 403 === $status || $status >= 500 ) {
+				$outage = sprintf( 'HTTP %d — %s', $status, wp_remote_retrieve_response_message( $response ) );
+			}
+		}
+
+		set_transient( 'gatecha_outage_probe', array( 'outage' => $outage ), MINUTE_IN_SECONDS );
+		return $outage;
 	}
 
 	/**
@@ -682,8 +739,12 @@ function gatecha_enqueue_scripts() {
 			'gatecha-script',
 			'gatechaI18n',
 			array(
-				'language' => $plugin->get_language(),
-				'strings'  => $plugin->get_translations(),
+				'language'    => $plugin->get_language(),
+				'strings'     => $plugin->get_translations(),
+				// Lets gatecha.js release the form when the widget cannot reach
+				// GateCHA. The server still checks the outage before accepting.
+				'failOpen'    => 'open' === $plugin->get_fail_mode(),
+				'unavailable' => __( 'The anti-spam check is unavailable right now. You can still send this form.', 'gatecha-captcha' ),
 			)
 		);
 	}
