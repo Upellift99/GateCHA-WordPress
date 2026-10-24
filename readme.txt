@@ -4,7 +4,7 @@ Tags: captcha, gatecha, altcha, spam, proof-of-work
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.3.0
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -160,6 +160,11 @@ This is the unmodified production build distributed on npm as the [`altcha`](htt
 
 == Changelog ==
 
+= 1.4.1 =
+* Your CAPTCHA statistics in WordPress. Paste a stats token from your GateCHA dashboard (GateCHA 0.12.0 or later) in Settings → GateCHA and a dashboard widget shows today's verified and failed submissions, the last 30 days and the top countries. The full view sits at the top of the settings page. Optional: without a token the plugin makes no new request. Translated in German and French.
+* Fix: "Fail open" now really keeps forms working when the visitor's browser cannot reach GateCHA (server down or not answering, API key disabled). Before, the CAPTCHA stayed stuck and blocked the form whatever the setting. A submission without a solved CAPTCHA is only accepted once your WordPress server has confirmed GateCHA is unavailable, so skipping the CAPTCHA still gets a bot nothing while your server is up. "Fail closed" is unchanged.
+* 1.4.0 was never offered as an update: it was tagged by mistake with the wrong version number.
+
 = 1.3.0 =
 * Clearer error messages for visitors. Instead of one "CAPTCHA verification failed." for everything, the plugin now says whether the "I'm not a robot" check was never completed, did not pass, or could not run because your GateCHA server is unreachable, so visitors know whether to tick the box, try again, or come back later. Translated in German and French.
 * Settings → GateCHA works with screen readers: every field now has a name ("GateCHA URL", "WooCommerce — Login: Enable" instead of eighteen identical "Enable" checkboxes), hints are read with their field, and the Failure Mode options are no longer cut off.
@@ -186,6 +191,9 @@ This is the unmodified production build distributed on npm as the [`altcha`](htt
 * `[gatecha]` shortcode for custom form placement.
 
 == Upgrade Notice ==
+
+= 1.4.1 =
+CAPTCHA statistics on your WordPress dashboard (optional, needs GateCHA 0.12.0), and "Fail open" now keeps forms working when GateCHA cannot be reached.
 
 = 1.3.0 =
 Clearer error messages for your visitors and a settings page that works with screen readers. Nothing to reconfigure.
