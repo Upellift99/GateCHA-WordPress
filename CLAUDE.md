@@ -101,6 +101,21 @@ changing anything here:
   cannot drift from what the server that scores them expects. An instance older
   than 0.6.0 answers 404 and verification carries on unchanged.
 
+## GateCHA Cloud connect
+
+`includes/class-gatecha-cloud.php`, admin only. While no server is set, the
+settings page offers GateCHA Cloud next to self-hosting (guideline 5: nothing
+is locked behind it). `admin-post.php?action=gatecha_cloud_connect` (nonce)
+stores a random state per user (30 min transient) and redirects to
+`{cloud}/connect?site=&return=&state=`; the service returns to
+`admin-post.php?action=gatecha_cloud_callback&gatecha_code=&state=`, the state
+is checked with `hash_equals` and deleted, and the code is exchanged
+server-side on `POST {cloud}/connect/exchange` for `gatecha_url`, `api_key`,
+`stats_token`. Credentials never cross the browser. `{cloud}` is
+`https://cloud.gatecha.com`, overridable with the `GATECHA_CLOUD_URL` constant
+or the `gatecha_cloud_url` filter (tests). The service lives in the private
+`gatecha-cloud` repository.
+
 ## Failure mode
 
 `gatecha_fail_mode`, `closed` by default. In `open` mode, `gatecha.js` replaces

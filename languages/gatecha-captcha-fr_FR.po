@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GateCHA CAPTCHA 1.4.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/gatecha-captcha\n"
-"POT-Creation-Date: 2026-10-24T15:53:31+00:00\n"
+"POT-Creation-Date: 2026-10-24T21:20:25+00:00\n"
 "PO-Revision-Date: 2026-09-24 00:00+0000\n"
 "Last-Translator: GateCHA\n"
 "Language-Team: French (France)\n"
@@ -49,7 +49,7 @@ msgstr ""
 msgid "https://gatecha.org"
 msgstr ""
 
-#: gatecha-captcha.php:97 includes/class-gatecha-admin.php:534
+#: gatecha-captcha.php:99 includes/class-gatecha-admin.php:534
 msgid "Settings"
 msgstr "Réglages"
 
@@ -287,15 +287,91 @@ msgid "Server unreachable (%1$s). Last error %2$s ago. Current mode: %3$s."
 msgstr ""
 "Serveur injoignable (%1$s). Dernière erreur il y a %2$s. Mode actuel : %3$s."
 
-#: includes/class-gatecha-admin.php:558
+#: includes/class-gatecha-admin.php:562
 msgid "Statistics"
 msgstr "Statistiques"
 
 #. translators: %s: plugin version number
-#: includes/class-gatecha-admin.php:576
+#: includes/class-gatecha-admin.php:580
 #, php-format
 msgid "GateCHA CAPTCHA for WordPress — v%s"
 msgstr "GateCHA CAPTCHA pour WordPress — v%s"
+
+#: includes/class-gatecha-cloud.php:76
+msgid "No GateCHA server yet?"
+msgstr "Pas encore de serveur GateCHA ?"
+
+#: includes/class-gatecha-cloud.php:77
+msgid ""
+"This plugin checks your forms through a GateCHA server. Host one yourself, "
+"free and open source, or let us host it for you."
+msgstr ""
+"Cette extension vérifie vos formulaires grâce à un serveur GateCHA. Hébergez-"
+"le vous-même, c'est gratuit et open source, ou laissez-nous l'héberger pour "
+"vous."
+
+#: includes/class-gatecha-cloud.php:81
+msgid "Use GateCHA Cloud"
+msgstr "Utiliser GateCHA Cloud"
+
+#: includes/class-gatecha-cloud.php:82
+msgid "Host it yourself (free)"
+msgstr "L'héberger moi-même (gratuit)"
+
+#: includes/class-gatecha-cloud.php:85
+msgid ""
+"GateCHA Cloud is a paid service for businesses, hosted in France, with a "
+"free 30-day trial and no card needed. You come back here with everything "
+"filled in."
+msgstr ""
+"GateCHA Cloud est un service payant pour les professionnels, hébergé en "
+"France, avec 30 jours d'essai gratuits et sans carte bancaire. Vous revenez "
+"ici avec tout déjà rempli."
+
+#. translators: %s: host name of the GateCHA Cloud service
+#: includes/class-gatecha-cloud.php:89
+#, php-format
+msgid ""
+"Clicking sends this site's address to %s to start the sign-up; nothing is "
+"sent before."
+msgstr ""
+"Le clic envoie l'adresse de ce site à %s pour démarrer l'inscription ; rien "
+"n'est envoyé avant."
+
+#: includes/class-gatecha-cloud.php:103 includes/class-gatecha-cloud.php:128
+msgid "You are not allowed to do this."
+msgstr "Vous n'avez pas l'autorisation de faire cela."
+
+#: includes/class-gatecha-cloud.php:195
+msgid ""
+"Connected to GateCHA Cloud. Choose below which forms to protect, then save."
+msgstr ""
+"Connecté à GateCHA Cloud. Choisissez ci-dessous les formulaires à protéger, "
+"puis enregistrez."
+
+#: includes/class-gatecha-cloud.php:196
+msgid ""
+"The connection could not be confirmed: it expired, or was started from "
+"another browser. Start again."
+msgstr ""
+"La connexion n'a pas pu être confirmée : elle a expiré, ou a été lancée "
+"depuis un autre navigateur. Recommencez."
+
+#: includes/class-gatecha-cloud.php:197
+msgid ""
+"GateCHA Cloud could not be reached to finish the connection. Start again in "
+"a few minutes, or paste the values from your confirmation email."
+msgstr ""
+"GateCHA Cloud est injoignable pour terminer la connexion. Recommencez dans "
+"quelques minutes, ou collez les valeurs reçues dans l'e-mail de confirmation."
+
+#: includes/class-gatecha-cloud.php:198
+msgid ""
+"GateCHA Cloud did not confirm the connection. Start again, or paste the "
+"values from your confirmation email."
+msgstr ""
+"GateCHA Cloud n'a pas confirmé la connexion. Recommencez, ou collez les "
+"valeurs reçues dans l'e-mail de confirmation."
 
 #. translators: %s: error detail from the HTTP request
 #: includes/class-gatecha-stats.php:148
@@ -530,3 +606,10 @@ msgstr "Échec de l’envoi du commentaire"
 #: includes/integrations/wordpress-reset-password.php:39
 msgid "Error"
 msgstr "Erreur"
+
+#~ msgid ""
+#~ "GateCHA Cloud is hosted in France, with a free 30-day trial and no card "
+#~ "needed. You come back here with everything filled in."
+#~ msgstr ""
+#~ "GateCHA Cloud est hébergé en France, avec 30 jours d'essai gratuits et "
+#~ "sans carte bancaire. Vous revenez ici avec tout déjà rempli."

@@ -14,6 +14,8 @@ Self-hosted ALTCHA proof-of-work CAPTCHA via GateCHA. Protects WordPress forms w
 
 GateCHA CAPTCHA connects your WordPress site to your own [GateCHA](https://gatecha.org) instance — a self-hosted, open-source CAPTCHA management service based on the ALTCHA proof-of-work protocol.
 
+No server? Every feature of the plugin works with a GateCHA you host yourself, for free. If you would rather not run one, the optional **GateCHA Cloud** service, for businesses, hosts it for you in France: one click in Settings → GateCHA, and you come back with everything filled in.
+
 **Why GateCHA?**
 
 * **Privacy-first** — No cookies, no fingerprinting, no user tracking. Fully GDPR-compliant.
@@ -71,7 +73,11 @@ The API key is used in the browser to fetch challenges, similar to how reCAPTCHA
 
 = Does this plugin send data to external services? =
 
-Only to your own GateCHA instance. No data is sent to any third-party service. See the External Services section below.
+Only to the GateCHA server you configure: your own instance, or GateCHA Cloud if you choose it. Nothing is sent to Google, Cloudflare or any other third party. See the External Services section below.
+
+= What is GateCHA Cloud? =
+
+An optional paid service for businesses (companies, freelancers, agencies) that runs the GateCHA server for you, hosted in France, with a free 30-day trial and no card needed. The plugin offers it on Settings → GateCHA only while no server is configured, next to the free self-hosted option, and contacts it only when you click **Use GateCHA Cloud**. Nothing in the plugin is locked behind it: a self-hosted GateCHA gives you every feature.
 
 = What are interaction signals? =
 
@@ -138,6 +144,10 @@ One more request happens only when **Collect Interaction Signals** is enabled, w
 One more request happens only when a **Stats Token** is saved in the settings, which it is not by default:
 
 4. **GET /api/v1/stats** — Called from your WordPress server, at most once every 10 minutes and only when an administrator opens the WordPress dashboard or Settings → GateCHA, to read this key's statistics (counts of challenges, verified and failed submissions per day, and per country). It sends the stats token and nothing about your visitors.
+
+One more service is contacted only if an administrator clicks **Use GateCHA Cloud** on Settings → GateCHA:
+
+5. **GateCHA Cloud** (cloud.gatecha.com), the optional hosted GateCHA. The click sends the admin's browser there with this site's address, a return address in this site's admin and a random value that protects the round trip. After sign-up and payment on that service (payments are processed by Stripe), the browser comes back with a one-time code, and your WordPress server exchanges it with cloud.gatecha.com for the GateCHA URL, API key and stats token, which it saves in the settings. From then on, GateCHA Cloud is the GateCHA server of items 1 to 4. Terms: https://gatecha.com/cgv — Privacy policy: https://gatecha.com/confidentialite
 
 No data is sent to any third-party service. All communication is between your WordPress installation and your own GateCHA instance at the URL you configure in Settings → GateCHA.
 

@@ -1,5 +1,21 @@
 /* GateCHA statistics: dashboard widget and Settings → GateCHA. */
 
+.gatecha-cloud-offer {
+	max-width: 720px;
+	margin: 16px 0 24px;
+	padding: 4px 16px 12px;
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-left: 4px solid #0f766e;
+}
+
+.gatecha-cloud-offer__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 12px 0;
+}
+
 .gatecha-stats-panel {
 	max-width: 720px;
 	margin: 16px 0 24px;
