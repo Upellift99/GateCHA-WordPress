@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GateCHA CAPTCHA 1.4.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/gatecha-captcha\n"
-"POT-Creation-Date: 2026-10-24T17:25:35+00:00\n"
+"POT-Creation-Date: 2026-10-24T21:20:25+00:00\n"
 "PO-Revision-Date: 2026-09-24 00:00+0000\n"
 "Last-Translator: GateCHA\n"
 "Language-Team: French (France)\n"
@@ -320,11 +320,13 @@ msgstr "L'héberger moi-même (gratuit)"
 
 #: includes/class-gatecha-cloud.php:85
 msgid ""
-"GateCHA Cloud is hosted in France, with a free 30-day trial and no card "
-"needed. You come back here with everything filled in."
+"GateCHA Cloud is a paid service for businesses, hosted in France, with a "
+"free 30-day trial and no card needed. You come back here with everything "
+"filled in."
 msgstr ""
-"GateCHA Cloud est hébergé en France, avec 30 jours d'essai gratuits et sans "
-"carte bancaire. Vous revenez ici avec tout déjà rempli."
+"GateCHA Cloud est un service payant pour les professionnels, hébergé en "
+"France, avec 30 jours d'essai gratuits et sans carte bancaire. Vous revenez "
+"ici avec tout déjà rempli."
 
 #. translators: %s: host name of the GateCHA Cloud service
 #: includes/class-gatecha-cloud.php:89
@@ -604,3 +606,10 @@ msgstr "Échec de l’envoi du commentaire"
 #: includes/integrations/wordpress-reset-password.php:39
 msgid "Error"
 msgstr "Erreur"
+
+#~ msgid ""
+#~ "GateCHA Cloud is hosted in France, with a free 30-day trial and no card "
+#~ "needed. You come back here with everything filled in."
+#~ msgstr ""
+#~ "GateCHA Cloud est hébergé en France, avec 30 jours d'essai gratuits et "
+#~ "sans carte bancaire. Vous revenez ici avec tout déjà rempli."

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-24T17:25:35+00:00\n"
+"POT-Creation-Date: 2026-10-24T21:20:25+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: gatecha-captcha\n"
@@ -265,7 +265,7 @@ msgid "Host it yourself (free)"
 msgstr ""
 
 #: includes/class-gatecha-cloud.php:85
-msgid "GateCHA Cloud is hosted in France, with a free 30-day trial and no card needed. You come back here with everything filled in."
+msgid "GateCHA Cloud is a paid service for businesses, hosted in France, with a free 30-day trial and no card needed. You come back here with everything filled in."
 msgstr ""
 
 #. translators: %s: host name of the GateCHA Cloud service

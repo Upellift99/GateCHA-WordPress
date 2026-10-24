@@ -82,7 +82,7 @@ class GateCHA_Cloud {
 				<a class="button" href="https://gatecha.org/docs/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Host it yourself (free)', 'gatecha-captcha' ); ?></a>
 			</form>
 			<p class="description">
-				<?php esc_html_e( 'GateCHA Cloud is hosted in France, with a free 30-day trial and no card needed. You come back here with everything filled in.', 'gatecha-captcha' ); ?>
+				<?php esc_html_e( 'GateCHA Cloud is a paid service for businesses, hosted in France, with a free 30-day trial and no card needed. You come back here with everything filled in.', 'gatecha-captcha' ); ?>
 				<?php
 				printf(
 					/* translators: %s: host name of the GateCHA Cloud service */

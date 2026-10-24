@@ -14,7 +14,7 @@ Self-hosted ALTCHA proof-of-work CAPTCHA via GateCHA. Protects WordPress forms w
 
 GateCHA CAPTCHA connects your WordPress site to your own [GateCHA](https://gatecha.org) instance — a self-hosted, open-source CAPTCHA management service based on the ALTCHA proof-of-work protocol.
 
-No server? Every feature of the plugin works with a GateCHA you host yourself, for free. If you would rather not run one, the optional **GateCHA Cloud** service hosts it for you in France: one click in Settings → GateCHA, and you come back with everything filled in.
+No server? Every feature of the plugin works with a GateCHA you host yourself, for free. If you would rather not run one, the optional **GateCHA Cloud** service, for businesses, hosts it for you in France: one click in Settings → GateCHA, and you come back with everything filled in.
 
 **Why GateCHA?**
 
@@ -77,7 +77,7 @@ Only to the GateCHA server you configure: your own instance, or GateCHA Cloud if
 
 = What is GateCHA Cloud? =
 
-An optional paid service that runs the GateCHA server for you, hosted in France, with a free 30-day trial and no card needed. The plugin offers it on Settings → GateCHA only while no server is configured, next to the free self-hosted option, and contacts it only when you click **Use GateCHA Cloud**. Nothing in the plugin is locked behind it: a self-hosted GateCHA gives you every feature.
+An optional paid service for businesses (companies, freelancers, agencies) that runs the GateCHA server for you, hosted in France, with a free 30-day trial and no card needed. The plugin offers it on Settings → GateCHA only while no server is configured, next to the free self-hosted option, and contacts it only when you click **Use GateCHA Cloud**. Nothing in the plugin is locked behind it: a self-hosted GateCHA gives you every feature.
 
 = What are interaction signals? =
 
