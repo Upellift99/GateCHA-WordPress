@@ -87,6 +87,12 @@ Turn that second one on only once you have watched your own traffic, because a f
 
 `add_action( 'gatecha_his_result', function ( $score, $suspected ) { error_log( "GateCHA HIS $score" ); }, 10, 2 );`
 
+= Can I see my CAPTCHA statistics in WordPress? =
+
+Yes, with GateCHA 0.12.0 or later. On your GateCHA dashboard, open the key this site uses and click **Generate** next to **Stats token**, then paste the token (it starts with `gs_`) in **Settings → GateCHA → Stats Token**. A **GateCHA CAPTCHA** widget then appears on the WordPress dashboard with today's verified and failed submissions, the last 30 days and the top countries, and the full view sits at the top of the settings page.
+
+The token is read-only and only opens this key's statistics. It never leaves your WordPress server: the numbers are fetched server-side and kept for 10 minutes. Leave the field empty and no statistics request is made.
+
 = Can I use this with a custom form? =
 
 Yes, use the `[gatecha]` shortcode to place the widget anywhere. Then verify the `altcha` POST field server-side.
@@ -119,6 +125,10 @@ This plugin connects to your self-hosted GateCHA instance for CAPTCHA challenge 
 One more request happens only when **Collect Interaction Signals** is enabled, which it is not by default:
 
 3. **GET /api/public/his.js** — The interaction-signal collector, loaded by the user's browser from the same instance. It measures aggregates on the pages that carry a CAPTCHA (durations, event counts, total pointer distance, typing rhythm variance) and hands them to your WordPress server with the form, which forwards them to /api/v1/verify. It reads no field values, no pointer coordinates and no key contents.
+
+One more request happens only when a **Stats Token** is saved in the settings, which it is not by default:
+
+4. **GET /api/v1/stats** — Called from your WordPress server, at most once every 10 minutes and only when an administrator opens the WordPress dashboard or Settings → GateCHA, to read this key's statistics (counts of challenges, verified and failed submissions per day, and per country). It sends the stats token and nothing about your visitors.
 
 No data is sent to any third-party service. All communication is between your WordPress installation and your own GateCHA instance at the URL you configure in Settings → GateCHA.
 

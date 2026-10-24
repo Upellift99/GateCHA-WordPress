@@ -4,23 +4,22 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GateCHA CAPTCHA 1.3.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/GateCHA-WordPress\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/gatecha-captcha\n"
+"POT-Creation-Date: 2026-10-24T15:37:52+00:00\n"
+"PO-Revision-Date: 2026-09-24 00:00+0000\n"
 "Last-Translator: GateCHA\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-03T09:59:15+00:00\n"
-"PO-Revision-Date: 2026-09-24 00:00+0000\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: gatecha-captcha\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #. Plugin Name of the plugin
-#: gatecha-captcha.php
-#: includes/class-gatecha-admin.php:17
-#: includes/class-gatecha-admin.php:435
+#: gatecha-captcha.php includes/class-gatecha-admin.php:17
+#: includes/class-gatecha-admin.php:523 includes/class-gatecha-stats.php:77
 msgid "GateCHA CAPTCHA"
 msgstr ""
 
@@ -31,12 +30,15 @@ msgstr ""
 
 #. Description of the plugin
 #: gatecha-captcha.php
-msgid "Self-hosted ALTCHA proof-of-work CAPTCHA via GateCHA. Protects WordPress forms without cookies, fingerprinting, or third-party services."
-msgstr "Selbst gehostetes ALTCHA-Proof-of-Work-CAPTCHA über GateCHA. Schützt WordPress-Formulare ohne Cookies, Fingerprinting oder Drittanbieterdienste."
+msgid ""
+"Self-hosted ALTCHA proof-of-work CAPTCHA via GateCHA. Protects WordPress "
+"forms without cookies, fingerprinting, or third-party services."
+msgstr ""
+"Selbst gehostetes ALTCHA-Proof-of-Work-CAPTCHA über GateCHA. Schützt "
+"WordPress-Formulare ohne Cookies, Fingerprinting oder Drittanbieterdienste."
 
 #. Author of the plugin
-#: gatecha-captcha.php
-#: includes/class-gatecha-admin.php:18
+#: gatecha-captcha.php includes/class-gatecha-admin.php:18
 #: includes/integrations/elementor/field.php:36
 msgid "GateCHA"
 msgstr ""
@@ -46,8 +48,7 @@ msgstr ""
 msgid "https://gatecha.org"
 msgstr ""
 
-#: gatecha-captcha.php:83
-#: includes/class-gatecha-admin.php:446
+#: gatecha-captcha.php:97 includes/class-gatecha-admin.php:534
 msgid "Settings"
 msgstr "Einstellungen"
 
@@ -63,264 +64,452 @@ msgstr "Gib die URL deiner GateCHA-Instanz und den API-Schlüssel ein."
 msgid "GateCHA URL"
 msgstr "GateCHA-URL"
 
-#: includes/class-gatecha-admin.php:59
+#: includes/class-gatecha-admin.php:60
 msgid "Example: https://gatecha.example.com"
 msgstr "Beispiel: https://gatecha.example.com"
 
-#: includes/class-gatecha-admin.php:71
+#: includes/class-gatecha-admin.php:72
 msgid "API Key"
 msgstr "API-Schlüssel"
 
-#: includes/class-gatecha-admin.php:78
+#: includes/class-gatecha-admin.php:80
 msgid "Your GateCHA API key (starts with gk_)."
 msgstr "Dein GateCHA-API-Schlüssel (beginnt mit gk_)."
 
 #: includes/class-gatecha-admin.php:92
+msgid "The stats token starts with gs_. The previous value was kept."
+msgstr ""
+"Das Statistik-Token beginnt mit gs_. Der bisherige Wert wurde beibehalten."
+
+#: includes/class-gatecha-admin.php:103
+msgid "Stats Token"
+msgstr "Statistik-Token"
+
+#: includes/class-gatecha-admin.php:111
+msgid ""
+"Optional. Shows your CAPTCHA statistics in WordPress. Generate it on the "
+"key's page in your GateCHA dashboard (starts with gs_)."
+msgstr ""
+"Optional. Zeigt Ihre CAPTCHA-Statistiken in WordPress an. Erzeugen Sie es "
+"auf der Seite des Schlüssels in Ihrem GateCHA-Dashboard (beginnt mit gs_)."
+
+#: includes/class-gatecha-admin.php:125
 msgid "Failure Mode"
 msgstr "Verhalten bei Ausfall"
 
-#: includes/class-gatecha-admin.php:99
+#: includes/class-gatecha-admin.php:133
 msgid "Fail closed — block submissions when server is unreachable"
-msgstr "Geschlossen — Absendungen blockieren, wenn der Server nicht erreichbar ist"
+msgstr ""
+"Geschlossen — Absendungen blockieren, wenn der Server nicht erreichbar ist"
 
-#: includes/class-gatecha-admin.php:100
+#: includes/class-gatecha-admin.php:134
 msgid "Fail open — allow submissions when server is unreachable"
 msgstr "Offen — Absendungen zulassen, wenn der Server nicht erreichbar ist"
 
-#: includes/class-gatecha-admin.php:102
-msgid "Determines how forms behave if the GateCHA server cannot be reached. \"Fail closed\" is safer but may block legitimate users during an outage."
-msgstr "Legt fest, wie sich Formulare verhalten, wenn der GateCHA-Server nicht erreichbar ist. „Geschlossen“ ist sicherer, kann bei einem Ausfall aber auch echte Besucher blockieren."
+#: includes/class-gatecha-admin.php:136
+msgid ""
+"Determines how forms behave if the GateCHA server cannot be reached. \"Fail "
+"closed\" is safer but may block legitimate users during an outage."
+msgstr ""
+"Legt fest, wie sich Formulare verhalten, wenn der GateCHA-Server nicht "
+"erreichbar ist. „Geschlossen“ ist sicherer, kann bei einem Ausfall aber auch "
+"echte Besucher blockieren."
 
-#: includes/class-gatecha-admin.php:114
+#: includes/class-gatecha-admin.php:148
 msgid "Auto Verify"
 msgstr "Automatisch verifizieren"
 
-#: includes/class-gatecha-admin.php:120
-msgid "Automatically start verification when the user focuses the form. When disabled, the user must click the checkbox manually."
-msgstr "Startet die Verifizierung automatisch, sobald das Formular den Fokus erhält. Ist die Option deaktiviert, muss das Kontrollkästchen von Hand angeklickt werden."
+#: includes/class-gatecha-admin.php:154
+msgid ""
+"Automatically start verification when the user focuses the form. When "
+"disabled, the user must click the checkbox manually."
+msgstr ""
+"Startet die Verifizierung automatisch, sobald das Formular den Fokus erhält. "
+"Ist die Option deaktiviert, muss das Kontrollkästchen von Hand angeklickt "
+"werden."
 
-#: includes/class-gatecha-admin.php:132
+#: includes/class-gatecha-admin.php:166
 msgid "Hide Branding"
 msgstr "Branding ausblenden"
 
-#: includes/class-gatecha-admin.php:138
-msgid "Hide the ALTCHA logo and \"Protected by ALTCHA\" footer. Keeping branding visible is recommended."
-msgstr "Blendet das ALTCHA-Logo und die Fußzeile „Protected by ALTCHA“ aus. Es wird empfohlen, das Branding sichtbar zu lassen."
+#: includes/class-gatecha-admin.php:172
+msgid ""
+"Hide the ALTCHA logo and \"Protected by ALTCHA\" footer. Keeping branding "
+"visible is recommended."
+msgstr ""
+"Blendet das ALTCHA-Logo und die Fußzeile „Protected by ALTCHA“ aus. Es wird "
+"empfohlen, das Branding sichtbar zu lassen."
 
-#: includes/class-gatecha-admin.php:147
+#: includes/class-gatecha-admin.php:181
 msgid "Interaction Signals"
 msgstr "Interaktionssignale"
 
-#: includes/class-gatecha-admin.php:149
-msgid "Proof-of-work proves a browser did the work. It does not prove a human filled the form in. Interaction signals add a second opinion: how the form was filled, as counts and durations only. Never what was typed, never pointer coordinates, never an IP address."
-msgstr "Proof-of-Work beweist, dass ein Browser die Arbeit erledigt hat, nicht aber, dass ein Mensch das Formular ausgefüllt hat. Interaktionssignale liefern eine zweite Einschätzung: wie das Formular ausgefüllt wurde, nur als Zähler und Dauern. Nie das Eingegebene, nie Zeigerkoordinaten, nie eine IP-Adresse."
+#: includes/class-gatecha-admin.php:183
+msgid ""
+"Proof-of-work proves a browser did the work. It does not prove a human "
+"filled the form in. Interaction signals add a second opinion: how the form "
+"was filled, as counts and durations only. Never what was typed, never "
+"pointer coordinates, never an IP address."
+msgstr ""
+"Proof-of-Work beweist, dass ein Browser die Arbeit erledigt hat, nicht aber, "
+"dass ein Mensch das Formular ausgefüllt hat. Interaktionssignale liefern "
+"eine zweite Einschätzung: wie das Formular ausgefüllt wurde, nur als Zähler "
+"und Dauern. Nie das Eingegebene, nie Zeigerkoordinaten, nie eine IP-Adresse."
 
-#: includes/class-gatecha-admin.php:150
-msgid "Requires GateCHA 0.7.0 or later. Scores show up on your dashboard under HIS Monitor."
-msgstr "Erfordert GateCHA 0.7.0 oder neuer. Die Bewertungen erscheinen in deinem Dashboard unter „HIS Monitor“."
+#: includes/class-gatecha-admin.php:184
+msgid ""
+"Requires GateCHA 0.7.0 or later. Scores show up on your dashboard under HIS "
+"Monitor."
+msgstr ""
+"Erfordert GateCHA 0.7.0 oder neuer. Die Bewertungen erscheinen in deinem "
+"Dashboard unter „HIS Monitor“."
 
-#: includes/class-gatecha-admin.php:163
+#: includes/class-gatecha-admin.php:197
 msgid "Collect Interaction Signals"
 msgstr "Interaktionssignale erfassen"
 
-#: includes/class-gatecha-admin.php:169
-msgid "Load the collector from your GateCHA instance and send the aggregates along with each verification. On its own this changes nothing about who gets through: scores are recorded, never enforced."
-msgstr "Lädt den Collector von deiner GateCHA-Instanz und sendet die aggregierten Werte mit jeder Verifizierung. Für sich allein ändert das nichts daran, wer durchkommt: Die Bewertungen werden aufgezeichnet, aber nie durchgesetzt."
+#: includes/class-gatecha-admin.php:203
+msgid ""
+"Load the collector from your GateCHA instance and send the aggregates along "
+"with each verification. On its own this changes nothing about who gets "
+"through: scores are recorded, never enforced."
+msgstr ""
+"Lädt den Collector von deiner GateCHA-Instanz und sendet die aggregierten "
+"Werte mit jeder Verifizierung. Für sich allein ändert das nichts daran, wer "
+"durchkommt: Die Bewertungen werden aufgezeichnet, aber nie durchgesetzt."
 
-#: includes/class-gatecha-admin.php:181
+#: includes/class-gatecha-admin.php:215
 msgid "Reject Suspected Automation"
 msgstr "Vermutete Automatisierung ablehnen"
 
-#: includes/class-gatecha-admin.php:187
-msgid "Fail verification when GateCHA flags a submission as automated. Needs the setting above. Turn it on once you have watched your own scores for a few days: a false positive here is silent, the visitor simply cannot submit and never tells you."
-msgstr "Lässt die Verifizierung fehlschlagen, wenn GateCHA eine Absendung als automatisiert einstuft. Erfordert die Einstellung oben. Aktiviere sie erst, nachdem du deine eigenen Bewertungen einige Tage beobachtet hast: Ein Fehlalarm bleibt hier unbemerkt, der Besucher kann das Formular einfach nicht absenden und sagt es dir nie."
+#: includes/class-gatecha-admin.php:221
+msgid ""
+"Fail verification when GateCHA flags a submission as automated. Needs the "
+"setting above. Turn it on once you have watched your own scores for a few "
+"days: a false positive here is silent, the visitor simply cannot submit and "
+"never tells you."
+msgstr ""
+"Lässt die Verifizierung fehlschlagen, wenn GateCHA eine Absendung als "
+"automatisiert einstuft. Erfordert die Einstellung oben. Aktiviere sie erst, "
+"nachdem du deine eigenen Bewertungen einige Tage beobachtet hast: Ein "
+"Fehlalarm bleibt hier unbemerkt, der Besucher kann das Formular einfach "
+"nicht absenden und sagt es dir nie."
 
-#: includes/class-gatecha-admin.php:196
+#: includes/class-gatecha-admin.php:230
 msgid "WordPress"
 msgstr "WordPress"
 
-#: includes/class-gatecha-admin.php:198
+#: includes/class-gatecha-admin.php:232
 msgid "Enable CAPTCHA on built-in WordPress forms."
 msgstr "CAPTCHA für die integrierten WordPress-Formulare aktivieren."
 
-#: includes/class-gatecha-admin.php:204
-#: includes/class-gatecha-admin.php:244
+#: includes/class-gatecha-admin.php:238 includes/class-gatecha-admin.php:278
 msgid "Login"
 msgstr "Anmeldung"
 
-#: includes/class-gatecha-admin.php:205
-#: includes/class-gatecha-admin.php:245
+#: includes/class-gatecha-admin.php:239 includes/class-gatecha-admin.php:279
 msgid "Registration"
 msgstr "Registrierung"
 
-#: includes/class-gatecha-admin.php:206
-#: includes/class-gatecha-admin.php:246
+#: includes/class-gatecha-admin.php:240 includes/class-gatecha-admin.php:280
 msgid "Password Reset"
 msgstr "Passwort zurücksetzen"
 
-#: includes/class-gatecha-admin.php:207
+#: includes/class-gatecha-admin.php:241
 msgid "Comments"
 msgstr "Kommentare"
 
-#: includes/class-gatecha-admin.php:234
+#: includes/class-gatecha-admin.php:268
 msgid "WooCommerce"
 msgstr "WooCommerce"
 
-#: includes/class-gatecha-admin.php:237
+#: includes/class-gatecha-admin.php:271
 msgid "WooCommerce is not active."
 msgstr "WooCommerce ist nicht aktiv."
 
-#: includes/class-gatecha-admin.php:274
+#: includes/class-gatecha-admin.php:308
 msgid "Integrations"
 msgstr "Integrationen"
 
-#: includes/class-gatecha-admin.php:276
+#: includes/class-gatecha-admin.php:310
 msgid "Enable CAPTCHA on third-party form plugins."
 msgstr "CAPTCHA für Formular-Plugins von Drittanbietern aktivieren."
 
-#: includes/class-gatecha-admin.php:283
+#: includes/class-gatecha-admin.php:317
 msgid "Contact Form 7"
 msgstr "Contact Form 7"
 
-#: includes/class-gatecha-admin.php:287
+#: includes/class-gatecha-admin.php:321
 msgid "WPForms"
 msgstr "WPForms"
 
-#: includes/class-gatecha-admin.php:291
+#: includes/class-gatecha-admin.php:325
 msgid "Gravity Forms"
 msgstr "Gravity Forms"
 
-#: includes/class-gatecha-admin.php:295
+#: includes/class-gatecha-admin.php:329
 msgid "Elementor Pro Forms"
 msgstr "Elementor-Pro-Formulare"
 
-#: includes/class-gatecha-admin.php:299
+#: includes/class-gatecha-admin.php:333
 msgid "Forminator"
 msgstr "Forminator"
 
-#: includes/class-gatecha-admin.php:303
+#: includes/class-gatecha-admin.php:337
 msgid "Formidable Forms"
 msgstr "Formidable Forms"
 
-#: includes/class-gatecha-admin.php:307
+#: includes/class-gatecha-admin.php:341
 msgid "HTML Forms"
 msgstr "HTML Forms"
 
-#: includes/class-gatecha-admin.php:330
+#: includes/class-gatecha-admin.php:364
 msgid "Plugin not active."
 msgstr "Plugin nicht aktiv."
 
-#: includes/class-gatecha-admin.php:406
+#: includes/class-gatecha-admin.php:496
 msgid "Enable"
 msgstr "Aktivieren"
 
-#: includes/class-gatecha-admin.php:430
+#: includes/class-gatecha-admin.php:518
 msgid "fail open (submissions allowed)"
 msgstr "offen (Absendungen erlaubt)"
 
-#: includes/class-gatecha-admin.php:431
+#: includes/class-gatecha-admin.php:519
 msgid "fail closed (submissions blocked)"
 msgstr "geschlossen (Absendungen blockiert)"
 
 #. translators: 1: error detail, 2: human-readable time ago, 3: current failure mode
-#: includes/class-gatecha-admin.php:439
+#: includes/class-gatecha-admin.php:527
 #, php-format
 msgid "Server unreachable (%1$s). Last error %2$s ago. Current mode: %3$s."
-msgstr "Server nicht erreichbar (%1$s). Letzter Fehler vor %2$s. Aktueller Modus: %3$s."
+msgstr ""
+"Server nicht erreichbar (%1$s). Letzter Fehler vor %2$s. Aktueller Modus: "
+"%3$s."
+
+#: includes/class-gatecha-admin.php:558
+msgid "Statistics"
+msgstr "Statistiken"
 
 #. translators: %s: plugin version number
-#: includes/class-gatecha-admin.php:481
+#: includes/class-gatecha-admin.php:576
 #, php-format
 msgid "GateCHA CAPTCHA for WordPress — v%s"
 msgstr "GateCHA CAPTCHA für WordPress — v%s"
 
-#: includes/class-gatecha.php:478
-msgid "ALTCHA (official website)"
-msgstr "ALTCHA (offizielle Website)"
+#. translators: %s: error detail from the HTTP request
+#: includes/class-gatecha-stats.php:148
+#, php-format
+msgid "GateCHA server unreachable (%s)."
+msgstr "GateCHA-Server nicht erreichbar (%s)."
 
-#: includes/class-gatecha.php:479
-msgid "Cancel"
-msgstr "Abbrechen"
+#: includes/class-gatecha-stats.php:156
+msgid ""
+"The stats token was rejected. Generate a new one on the key's page in "
+"GateCHA and paste it in the settings."
+msgstr ""
+"Das Statistik-Token wurde abgelehnt. Erzeugen Sie auf der Seite des "
+"Schlüssels in GateCHA ein neues und fügen Sie es in den Einstellungen ein."
 
-#: includes/class-gatecha.php:480
-msgid "Enter code"
-msgstr "Code eingeben"
+#: includes/class-gatecha-stats.php:162
+msgid ""
+"This GateCHA server does not serve statistics yet. Update it to the latest "
+"version."
+msgstr ""
+"Dieser GateCHA-Server liefert noch keine Statistiken. Aktualisieren Sie ihn "
+"auf die neueste Version."
 
-#: includes/class-gatecha.php:481
-msgid "Enter code you hear. Press Space to play audio."
-msgstr "Gib den Code ein, den du hörst. Drücke die Leertaste, um die Audiodatei abzuspielen."
+#. translators: %d: HTTP status code
+#: includes/class-gatecha-stats.php:171
+#, php-format
+msgid "Unexpected answer from the GateCHA server (HTTP %d)."
+msgstr "Unerwartete Antwort des GateCHA-Servers (HTTP %d)."
 
-#: includes/class-gatecha.php:482
-msgid "To proceed, please enter the code from the image below."
-msgstr "Um fortzufahren, gib bitte den Code aus dem Bild unten ein."
+#: includes/class-gatecha-stats.php:185
+msgid "Details and settings"
+msgstr "Details und Einstellungen"
 
-#: includes/class-gatecha.php:483
-msgid "Verification failed. Try again later."
-msgstr "Verifizierung fehlgeschlagen. Versuche es später erneut."
+#: includes/class-gatecha-stats.php:211
+msgid ""
+"This API key is disabled on the GateCHA server: protected forms cannot be "
+"verified until it is enabled again."
+msgstr ""
+"Dieser API-Schlüssel ist auf dem GateCHA-Server deaktiviert: Geschützte "
+"Formulare können erst nach seiner Reaktivierung geprüft werden."
 
-#: includes/class-gatecha.php:484
-msgid "Verification expired. Try again."
-msgstr "Verifizierung abgelaufen. Versuche es erneut."
+#: includes/class-gatecha-stats.php:214
+msgid "Today"
+msgstr "Heute"
 
-#: includes/class-gatecha.php:485
-msgid "Protected by <a href=\"https://altcha.org\" target=\"_blank\">ALTCHA</a>"
-msgstr "Geschützt durch <a href=\"https://altcha.org\" target=\"_blank\">ALTCHA</a>"
+#: includes/class-gatecha-stats.php:216
+msgid "verified"
+msgstr "geprüft"
 
-#: includes/class-gatecha.php:486
-msgid "Get an audio challenge"
-msgstr "Audio-Aufgabe anfordern"
+#: includes/class-gatecha-stats.php:217
+msgid "failed"
+msgstr "fehlgeschlagen"
 
-#: includes/class-gatecha.php:487
+#: includes/class-gatecha-stats.php:218
+msgid "challenges"
+msgstr "Challenges"
+
+#. translators: %d: number of days
+#: includes/class-gatecha-stats.php:223
+#, php-format
+msgid "Last %d days"
+msgstr "Letzte %d Tage"
+
+#: includes/class-gatecha-stats.php:227
+msgid ""
+"No form submission checked yet. Submit a protected form once to see it "
+"counted here."
+msgstr ""
+"Noch keine Formularübermittlung geprüft. Senden Sie einmal ein geschütztes "
+"Formular ab, damit es hier gezählt wird."
+
+#. translators: 1: verified submissions, 2: failed submissions, 3: failure percentage
+#: includes/class-gatecha-stats.php:233
+#, php-format
+msgid "%1$s verified, %2$s failed (%3$s%%)."
+msgstr "%1$s geprüft, %2$s fehlgeschlagen (%3$s %%)."
+
+#: includes/class-gatecha-stats.php:244
+msgid "Countries"
+msgstr "Länder"
+
+#. translators: %s: number of verified submissions
+#: includes/class-gatecha-stats.php:252
+#, php-format
+msgid "%s verified"
+msgstr "%s geprüft"
+
+#. translators: %s: number of failed verifications
+#: includes/class-gatecha-stats.php:256
+#, php-format
+msgid "%s failed"
+msgstr "%s fehlgeschlagen"
+
+#: includes/class-gatecha-stats.php:263
+msgid "Counted by your GateCHA server. Refreshed every 10 minutes."
+msgstr "Von Ihrem GateCHA-Server gezählt. Alle 10 Minuten aktualisiert."
+
+#. translators: 1: first date, 2: last date
+#: includes/class-gatecha-stats.php:304
+#, php-format
+msgid "Verified and failed submissions per day, %1$s to %2$s."
+msgstr "Geprüfte und fehlgeschlagene Übermittlungen pro Tag, %1$s bis %2$s."
+
+#. translators: 1: date, 2: verified count, 3: failed count
+#: includes/class-gatecha-stats.php:323
+#, php-format
+msgid "%1$s: %2$d verified, %3$d failed"
+msgstr "%1$s: %2$d geprüft, %3$d fehlgeschlagen"
+
+#: includes/class-gatecha-stats.php:349
+msgid "Unknown"
+msgstr "Unbekannt"
+
+#: includes/class-gatecha.php:499 includes/class-gatecha.php:540
 msgid "I'm not a robot"
 msgstr "Ich bin kein Roboter"
 
-#: includes/class-gatecha.php:488
+#. translators: %s: the CAPTCHA checkbox label, "I'm not a robot"
+#: includes/class-gatecha.php:504
+#, php-format
+msgid "Please complete the “%s” check, then submit again."
+msgstr "Schließe die Prüfung „%s“ ab und sende das Formular erneut."
+
+#: includes/class-gatecha.php:506
+msgid ""
+"The anti-spam check is temporarily unavailable. Please try again in a few "
+"minutes."
+msgstr ""
+"Die Anti-Spam-Prüfung ist vorübergehend nicht verfügbar. Versuche es in ein "
+"paar Minuten erneut."
+
+#. translators: %s: the CAPTCHA checkbox label, "I'm not a robot"
+#: includes/class-gatecha.php:509
+#, php-format
+msgid "The “%s” check did not pass. Please run it again, then submit."
+msgstr ""
+"Die Prüfung „%s“ war nicht erfolgreich. Starte sie erneut und sende das "
+"Formular dann ab."
+
+#: includes/class-gatecha.php:511
+msgid "CAPTCHA verification failed."
+msgstr "CAPTCHA-Verifizierung fehlgeschlagen."
+
+#: includes/class-gatecha.php:531
+msgid "ALTCHA (official website)"
+msgstr "ALTCHA (offizielle Website)"
+
+#: includes/class-gatecha.php:532
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: includes/class-gatecha.php:533
+msgid "Enter code"
+msgstr "Code eingeben"
+
+#: includes/class-gatecha.php:534
+msgid "Enter code you hear. Press Space to play audio."
+msgstr ""
+"Gib den Code ein, den du hörst. Drücke die Leertaste, um die Audiodatei "
+"abzuspielen."
+
+#: includes/class-gatecha.php:535
+msgid "To proceed, please enter the code from the image below."
+msgstr "Um fortzufahren, gib bitte den Code aus dem Bild unten ein."
+
+#: includes/class-gatecha.php:536
+msgid "Verification failed. Try again later."
+msgstr "Verifizierung fehlgeschlagen. Versuche es später erneut."
+
+#: includes/class-gatecha.php:537
+msgid "Verification expired. Try again."
+msgstr "Verifizierung abgelaufen. Versuche es erneut."
+
+#: includes/class-gatecha.php:538
+msgid ""
+"Protected by <a href=\"https://altcha.org\" target=\"_blank\">ALTCHA</a>"
+msgstr ""
+"Geschützt durch <a href=\"https://altcha.org\" target=\"_blank\">ALTCHA</a>"
+
+#: includes/class-gatecha.php:539
+msgid "Get an audio challenge"
+msgstr "Audio-Aufgabe anfordern"
+
+#: includes/class-gatecha.php:541
 msgid "Loading..."
 msgstr "Wird geladen …"
 
-#: includes/class-gatecha.php:489
+#: includes/class-gatecha.php:542
 msgid "Reload"
 msgstr "Neu laden"
 
-#: includes/class-gatecha.php:490
+#: includes/class-gatecha.php:543
 msgid "Verification required!"
 msgstr "Verifizierung erforderlich!"
 
-#: includes/class-gatecha.php:491
+#: includes/class-gatecha.php:544
 msgid "Verified"
 msgstr "Verifiziert"
 
-#: includes/class-gatecha.php:492
+#: includes/class-gatecha.php:545
 msgid "Verify"
 msgstr "Verifizieren"
 
-#: includes/class-gatecha.php:493
+#: includes/class-gatecha.php:546
 msgid "Verifying..."
 msgstr "Wird verifiziert …"
 
-#: includes/class-gatecha.php:494
+#: includes/class-gatecha.php:547
 msgid "Verifying... please wait."
 msgstr "Wird verifiziert … bitte warten."
 
-#: includes/class-gatecha.php:581
+#: includes/class-gatecha.php:634
 msgid "This form requires JavaScript."
 msgstr "Dieses Formular erfordert JavaScript."
-
-#: includes/integrations/elementor/field.php:68
-#: includes/integrations/formidable/GateCHAFieldType.php:58
-#: includes/integrations/forminator.php:49
-#: includes/integrations/gravityforms/field.php:86
-#: includes/integrations/html-forms.php:59
-#: includes/integrations/woocommerce-login.php:46
-#: includes/integrations/woocommerce-register.php:36
-#: includes/integrations/woocommerce-reset-password.php:41
-#: includes/integrations/wordpress-comments.php:50
-#: includes/integrations/wordpress-login.php:58
-#: includes/integrations/wordpress-register.php:40
-#: includes/integrations/wordpress-reset-password.php:40
-#: includes/integrations/wpforms.php:36
-msgid "CAPTCHA verification failed."
-msgstr "CAPTCHA-Verifizierung fehlgeschlagen."
 
 #: includes/integrations/gravityforms/field.php:64
 msgid "GateCHA CAPTCHA widget will appear here."
@@ -335,19 +524,3 @@ msgstr "Fehler beim Absenden des Kommentars"
 #: includes/integrations/wordpress-reset-password.php:39
 msgid "Error"
 msgstr "Fehler"
-
-#. translators: %s: the CAPTCHA checkbox label, "I'm not a robot"
-#: includes/class-gatecha.php
-#, php-format
-msgid "Please complete the “%s” check, then submit again."
-msgstr "Schließe die Prüfung „%s“ ab und sende das Formular erneut."
-
-#: includes/class-gatecha.php
-msgid "The anti-spam check is temporarily unavailable. Please try again in a few minutes."
-msgstr "Die Anti-Spam-Prüfung ist vorübergehend nicht verfügbar. Versuche es in ein paar Minuten erneut."
-
-#. translators: %s: the CAPTCHA checkbox label, "I'm not a robot"
-#: includes/class-gatecha.php
-#, php-format
-msgid "The “%s” check did not pass. Please run it again, then submit."
-msgstr "Die Prüfung „%s“ war nicht erfolgreich. Starte sie erneut und sende das Formular dann ab."

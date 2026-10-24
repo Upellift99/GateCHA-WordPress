@@ -1,0 +1,93 @@
+/* GateCHA statistics: dashboard widget and Settings → GateCHA. */
+
+.gatecha-stats-panel {
+	max-width: 720px;
+	margin: 16px 0 24px;
+	padding: 4px 16px 12px;
+	background: #fff;
+	border: 1px solid #c3c4c7;
+}
+
+.gatecha-stats__heading {
+	margin: 16px 0 6px;
+	font-size: 13px;
+	font-weight: 600;
+	color: #50575e;
+}
+
+.gatecha-stats__heading:first-child,
+.gatecha-stats .notice + .gatecha-stats__heading {
+	margin-top: 4px;
+}
+
+.gatecha-stats__figures {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px 24px;
+	margin: 0;
+}
+
+.gatecha-stats__figure {
+	margin: 0;
+}
+
+.gatecha-stats__value {
+	font-size: 22px;
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+	color: #1d2327;
+}
+
+.gatecha-stats__figure--ok .gatecha-stats__value {
+	color: #007017;
+}
+
+.gatecha-stats__figure--fail .gatecha-stats__value {
+	color: #b32d2e;
+}
+
+.gatecha-stats__label {
+	color: #50575e;
+}
+
+.gatecha-stats__summary,
+.gatecha-stats__empty {
+	margin: 0 0 6px;
+}
+
+.gatecha-stats__chart {
+	display: block;
+	width: 100%;
+	height: 60px;
+}
+
+.gatecha-stats__bar-ok {
+	fill: #68de7c;
+}
+
+.gatecha-stats__bar-fail {
+	fill: #d63638;
+}
+
+.gatecha-stats__countries {
+	border-collapse: collapse;
+}
+
+.gatecha-stats__countries th,
+.gatecha-stats__countries td {
+	padding: 2px 16px 2px 0;
+	text-align: left;
+	font-weight: 400;
+	font-variant-numeric: tabular-nums;
+}
+
+.gatecha-stats__fail {
+	color: #b32d2e;
+}
+
+.gatecha-stats__note,
+.gatecha-stats__more {
+	margin: 10px 0 0;
+	color: #646970;
+	font-size: 12px;
+}
