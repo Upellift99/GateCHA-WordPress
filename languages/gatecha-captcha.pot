@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-24T15:37:52+00:00\n"
+"POT-Creation-Date: 2026-10-24T15:53:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: gatecha-captcha\n"
@@ -344,97 +344,101 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: includes/class-gatecha.php:499
-#: includes/class-gatecha.php:540
+#: includes/class-gatecha.php:556
+#: includes/class-gatecha.php:597
 msgid "I'm not a robot"
 msgstr ""
 
 #. translators: %s: the CAPTCHA checkbox label, "I'm not a robot"
-#: includes/class-gatecha.php:504
+#: includes/class-gatecha.php:561
 #, php-format
 msgid "Please complete the “%s” check, then submit again."
 msgstr ""
 
-#: includes/class-gatecha.php:506
+#: includes/class-gatecha.php:563
 msgid "The anti-spam check is temporarily unavailable. Please try again in a few minutes."
 msgstr ""
 
 #. translators: %s: the CAPTCHA checkbox label, "I'm not a robot"
-#: includes/class-gatecha.php:509
+#: includes/class-gatecha.php:566
 #, php-format
 msgid "The “%s” check did not pass. Please run it again, then submit."
 msgstr ""
 
-#: includes/class-gatecha.php:511
+#: includes/class-gatecha.php:568
 msgid "CAPTCHA verification failed."
 msgstr ""
 
-#: includes/class-gatecha.php:531
+#: includes/class-gatecha.php:588
 msgid "ALTCHA (official website)"
 msgstr ""
 
-#: includes/class-gatecha.php:532
+#: includes/class-gatecha.php:589
 msgid "Cancel"
 msgstr ""
 
-#: includes/class-gatecha.php:533
+#: includes/class-gatecha.php:590
 msgid "Enter code"
 msgstr ""
 
-#: includes/class-gatecha.php:534
+#: includes/class-gatecha.php:591
 msgid "Enter code you hear. Press Space to play audio."
 msgstr ""
 
-#: includes/class-gatecha.php:535
+#: includes/class-gatecha.php:592
 msgid "To proceed, please enter the code from the image below."
 msgstr ""
 
-#: includes/class-gatecha.php:536
+#: includes/class-gatecha.php:593
 msgid "Verification failed. Try again later."
 msgstr ""
 
-#: includes/class-gatecha.php:537
+#: includes/class-gatecha.php:594
 msgid "Verification expired. Try again."
 msgstr ""
 
-#: includes/class-gatecha.php:538
+#: includes/class-gatecha.php:595
 msgid "Protected by <a href=\"https://altcha.org\" target=\"_blank\">ALTCHA</a>"
 msgstr ""
 
-#: includes/class-gatecha.php:539
+#: includes/class-gatecha.php:596
 msgid "Get an audio challenge"
 msgstr ""
 
-#: includes/class-gatecha.php:541
+#: includes/class-gatecha.php:598
 msgid "Loading..."
 msgstr ""
 
-#: includes/class-gatecha.php:542
+#: includes/class-gatecha.php:599
 msgid "Reload"
 msgstr ""
 
-#: includes/class-gatecha.php:543
+#: includes/class-gatecha.php:600
 msgid "Verification required!"
 msgstr ""
 
-#: includes/class-gatecha.php:544
+#: includes/class-gatecha.php:601
 msgid "Verified"
 msgstr ""
 
-#: includes/class-gatecha.php:545
+#: includes/class-gatecha.php:602
 msgid "Verify"
 msgstr ""
 
-#: includes/class-gatecha.php:546
+#: includes/class-gatecha.php:603
 msgid "Verifying..."
 msgstr ""
 
-#: includes/class-gatecha.php:547
+#: includes/class-gatecha.php:604
 msgid "Verifying... please wait."
 msgstr ""
 
-#: includes/class-gatecha.php:634
+#: includes/class-gatecha.php:691
 msgid "This form requires JavaScript."
+msgstr ""
+
+#: includes/class-gatecha.php:747
+msgid "The anti-spam check is unavailable right now. You can still send this form."
 msgstr ""
 
 #: includes/integrations/gravityforms/field.php:64

@@ -42,3 +42,4 @@ foreach ( $gatecha_options as $gatecha_option ) {
 
 delete_transient( 'gatecha_last_server_error' );
 delete_transient( 'gatecha_stats_cache' );
+delete_transient( 'gatecha_outage_probe' );

@@ -87,6 +87,15 @@ Turn that second one on only once you have watched your own traffic, because a f
 
 `add_action( 'gatecha_his_result', function ( $score, $suspected ) { error_log( "GateCHA HIS $score" ); }, 10, 2 );`
 
+= What happens when my GateCHA server is down? =
+
+It depends on **Settings → GateCHA → Failure Mode**.
+
+* **Fail closed** (the default): protected forms cannot be sent until the server is back. Safer against spam, but visitors are blocked during the outage.
+* **Fail open**: forms keep working. If the visitor's browser cannot reach GateCHA (server down or not answering for 15 seconds, or API key disabled), the CAPTCHA is replaced by a short note and the form can be sent. Before accepting it, your WordPress server checks GateCHA itself; a submission without a solved CAPTCHA is only accepted when GateCHA really is unavailable, so a bot that skips the CAPTCHA while your server is up is still refused.
+
+Either way, an administrator notice reports the outage in wp-admin.
+
 = Can I see my CAPTCHA statistics in WordPress? =
 
 Yes, with GateCHA 0.12.0 or later. On your GateCHA dashboard, open the key this site uses and click **Generate** next to **Stats token**, then paste the token (it starts with `gs_`) in **Settings → GateCHA → Stats Token**. A **GateCHA CAPTCHA** widget then appears on the WordPress dashboard with today's verified and failed submissions, the last 30 days and the top countries, and the full view sits at the top of the settings page.

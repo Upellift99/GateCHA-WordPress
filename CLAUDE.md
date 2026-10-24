@@ -101,6 +101,17 @@ changing anything here:
   cannot drift from what the server that scores them expects. An instance older
   than 0.6.0 answers 404 and verification carries on unchanged.
 
+## Failure mode
+
+`gatecha_fail_mode`, `closed` by default. In `open` mode, `gatecha.js` replaces
+the widget with a note when it reaches `data-state="error"` or stays
+`verifying` for 15 s: the widget's checkbox is `required`, so without this the
+browser's own validation blocks the form whatever the setting says. The form
+then arrives without a payload, and `verify()` only fails open after
+`get_outage()` confirms the instance cannot serve the key (challenge request:
+network error, 401/403 or 5xx), cached a minute in `gatecha_outage_probe`.
+Otherwise a missing payload is still a rejection.
+
 ## Statistics
 
 `includes/class-gatecha-stats.php`, admin only. With a stats token saved, it
