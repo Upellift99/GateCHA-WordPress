@@ -553,6 +553,10 @@ function gatecha_options_page_html() {
 	<div class="wrap">
 		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
+		<?php if ( ! GateCHA::$instance->is_configured() ) : ?>
+			<?php GateCHA_Cloud::render_offer(); ?>
+		<?php endif; ?>
+
 		<?php if ( GateCHA_Stats::is_available() ) : ?>
 			<div class="gatecha-stats-panel">
 				<h2><?php esc_html_e( 'Statistics', 'gatecha-captcha' ); ?></h2>

@@ -53,6 +53,8 @@ if ( is_admin() ) {
 	require_once GATECHA_PLUGIN_DIR . 'includes/class-gatecha-admin.php';
 	require_once GATECHA_PLUGIN_DIR . 'includes/class-gatecha-stats.php';
 	GateCHA_Stats::init();
+	require_once GATECHA_PLUGIN_DIR . 'includes/class-gatecha-cloud.php';
+	GateCHA_Cloud::init();
 }
 
 /*----------------------------------------------------------------------
