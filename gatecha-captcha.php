@@ -5,7 +5,7 @@
  * Description: Self-hosted ALTCHA proof-of-work CAPTCHA via GateCHA. Protects WordPress forms without cookies, fingerprinting, or third-party services.
  * Author:      GateCHA
  * Author URI:  https://gatecha.org
- * Version:     1.3.0
+ * Version:     1.4.1
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Tested up to: 7.1
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'GATECHA_VERSION', '1.3.0' );
+define( 'GATECHA_VERSION', '1.4.1' );
 define( 'GATECHA_PLUGIN_FILE', __FILE__ );
 define( 'GATECHA_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'GATECHA_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
