@@ -70,6 +70,7 @@ with the plugin (no external CDN dependency).
 |---------------|--------------------------------------|--------------------------------------|
 | GateCHA URL   | Base URL of GateCHA instance         | `https://gatecha.example.com`        |
 | API Key       | GateCHA API key (`gk_` prefix)       | `gk_6e16d2ff387822c52426cdb6`        |
+| Stats Token   | Optional read-only key stats token (`gs_` prefix), GateCHA 0.12.0+ | `gs_…` |
 | Collect Interaction Signals | Load the collector and forward `his_signals` to `/verify` (off by default) | checkbox |
 | Reject Suspected Automation | Fail verification when GateCHA flags the submission (needs the above) | checkbox |
 
@@ -99,6 +100,15 @@ changing anything here:
 - the collector is served by the instance, never bundled, so the aggregates
   cannot drift from what the server that scores them expects. An instance older
   than 0.6.0 answers 404 and verification carries on unchanged.
+
+## Statistics
+
+`includes/class-gatecha-stats.php`, admin only. With a stats token saved, it
+reads `GET /api/v1/stats?days=30` (Bearer `gs_…`) server-side and shows it in a
+dashboard widget and at the top of Settings → GateCHA. The `gk_` key cannot
+be used for this: it is public in every protected page. The response is cached
+in the `gatecha_stats_cache` transient for 10 minutes (2 on error), keyed on the
+URL and token so a settings change takes effect at once. No token, no request.
 
 ## CAPTCHA Flow
 

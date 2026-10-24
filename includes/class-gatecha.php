@@ -49,6 +49,7 @@ class GateCHA {
 
 	public static $option_url       = 'gatecha_url';
 	public static $option_api_key   = 'gatecha_api_key';
+	public static $option_stats_token = 'gatecha_stats_token';
 	public static $option_fail_mode   = 'gatecha_fail_mode';
 	public static $option_auto_verify = 'gatecha_auto_verify';
 	public static $option_hide_branding = 'gatecha_hide_branding';
@@ -153,6 +154,15 @@ class GateCHA {
 	 */
 	public function get_api_key() {
 		return trim( (string) get_option( self::$option_api_key ) );
+	}
+
+	/**
+	 * Get the configured stats token (gs_), empty when none is set.
+	 *
+	 * @return string
+	 */
+	public function get_stats_token() {
+		return trim( (string) get_option( self::$option_stats_token ) );
 	}
 
 	/**

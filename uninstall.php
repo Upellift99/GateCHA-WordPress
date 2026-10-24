@@ -14,6 +14,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 $gatecha_options = array(
 	'gatecha_url',
 	'gatecha_api_key',
+	'gatecha_stats_token',
 	'gatecha_wp_login',
 	'gatecha_wp_register',
 	'gatecha_wp_comments',
@@ -40,3 +41,4 @@ foreach ( $gatecha_options as $gatecha_option ) {
 }
 
 delete_transient( 'gatecha_last_server_error' );
+delete_transient( 'gatecha_stats_cache' );

@@ -81,6 +81,37 @@ add_action( 'admin_init', function () {
 		)
 	);
 
+	register_setting( 'gatecha_options', GateCHA::$option_stats_token, array(
+		'type'              => 'string',
+		'sanitize_callback' => function ( $value ) {
+			$value = sanitize_text_field( (string) $value );
+			if ( '' !== $value && 0 !== strpos( $value, 'gs_' ) ) {
+				add_settings_error(
+					GateCHA::$option_stats_token,
+					'gatecha_stats_token_invalid',
+					__( 'The stats token starts with gs_. The previous value was kept.', 'gatecha-captcha' )
+				);
+				return (string) get_option( GateCHA::$option_stats_token, '' );
+			}
+			return $value;
+		},
+		'default'           => '',
+	) );
+
+	add_settings_field(
+		GateCHA::$option_stats_token,
+		__( 'Stats Token', 'gatecha-captcha' ),
+		'gatecha_settings_field_callback',
+		'gatecha_admin',
+		'gatecha_section_general',
+		array(
+			'name' => GateCHA::$option_stats_token,
+			'label_for' => GateCHA::$option_stats_token,
+			'type' => 'password',
+			'hint' => __( 'Optional. Shows your CAPTCHA statistics in WordPress. Generate it on the key\'s page in your GateCHA dashboard (starts with gs_).', 'gatecha-captcha' ),
+		)
+	);
+
 	register_setting( 'gatecha_options', GateCHA::$option_fail_mode, array(
 		'type'              => 'string',
 		'sanitize_callback' => function ( $value ) {
@@ -521,6 +552,13 @@ function gatecha_options_page_html() {
 	?>
 	<div class="wrap">
 		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+
+		<?php if ( GateCHA_Stats::is_available() ) : ?>
+			<div class="gatecha-stats-panel">
+				<h2><?php esc_html_e( 'Statistics', 'gatecha-captcha' ); ?></h2>
+				<?php GateCHA_Stats::render( 10 ); ?>
+			</div>
+		<?php endif; ?>
 
 		<form action="options.php" method="post">
 			<?php
